@@ -15,4 +15,8 @@ public class AbstractEntity<ID extends DomainObjectId> {
     protected AbstractEntity(@NonNull ID id) {
         this.id = Objects.requireNonNull(id, "id must not be null");
     }
+
+    public ID getId() {
+        return id;
+    }
 }

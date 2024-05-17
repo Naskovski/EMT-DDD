@@ -16,5 +16,10 @@ public class User extends AbstractEntity<UserID> {
         super(UserID.randomId(UserID.class));
     }
 
-
+    public User(String first_name, String last_name, Email email) {
+        super(UserID.randomId(UserID.class));
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+    }
 }

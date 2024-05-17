@@ -1,24 +1,34 @@
 package emtddd.locationmanagement.domain.models;
 
 import emtddd.locationmanagement.domain.valueobjects.Address;
+import emtddd.locationmanagement.service.form.LocationForm;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import jakarta.persistence.Entity;
 import lombok.NonNull;
 
-
+@Entity
 public class Location extends AbstractEntity<LocationID> {
 
-    private String City;
+    private String city;
     private Address address;
 
-    private Location() {
+    public Location() {
         super(LocationID.randomId(LocationID.class));
     }
 
     public Location(String city, Address address) {
         super(LocationID.randomId(LocationID.class));
-        City = city;
+        this.city = city;
         this.address = address;
     }
+
+    public Location(LocationForm locationForm){
+        super(LocationID.randomId(LocationID.class));
+        this.city = locationForm.getCity();
+        this.address = locationForm.getAddress();
+    }
+
+
+
 }
