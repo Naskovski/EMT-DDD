@@ -4,9 +4,11 @@ import emtddd.reservationmanagement.service.forms.ClientForm;
 import emtddd.sharedkernel.domain.models.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity
 @Table(name = "client")
+@Getter
 public class Client extends User {
 
     private int loyalty_points;

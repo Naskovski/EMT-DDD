@@ -7,10 +7,12 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 
 @Entity
 @Table(name = "employee")
+@Getter
 public class Employee extends User {
 
    @AttributeOverride(name="id", column = @Column(name="location_id"))

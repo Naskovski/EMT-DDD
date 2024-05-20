@@ -3,9 +3,11 @@ package emtddd.vehiclemanagement.service.form;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import emtddd.vehiclemanagement.domain.models.Status;
 import jakarta.annotation.Nonnull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class VehicleForm {
     @Nonnull
     private String registrationPlate;
@@ -14,4 +16,6 @@ public class VehicleForm {
     private Status STATUS;
     @Nonnull
     private DomainObjectId locationId;
+
+
 }

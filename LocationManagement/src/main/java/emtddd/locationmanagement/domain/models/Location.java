@@ -5,9 +5,11 @@ import emtddd.locationmanagement.service.form.LocationForm;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import jakarta.persistence.Entity;
+import lombok.Getter;
 import lombok.NonNull;
 
 @Entity
+@Getter
 public class Location extends AbstractEntity<LocationID> {
 
     private String city;

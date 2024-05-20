@@ -1,13 +1,16 @@
 package emtddd.reservationmanagement.service.forms;
 
+import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@AllArgsConstructor
 public class ReservationForm {
 
     @NotNull
@@ -17,7 +20,7 @@ public class ReservationForm {
     private DomainObjectId employee_id;
 
     @NotNull
-    private DomainObjectId vehicle_id;
+    private VehicleID vehicle_id;
 
     @NotNull
     @Future

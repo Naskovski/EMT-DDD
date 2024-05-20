@@ -1,5 +1,7 @@
 package emtddd.reservationmanagement.domain.models;
 
+import emtddd.reservationmanagement.domain.valueobjects.Vehicle;
+import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import jakarta.persistence.AttributeOverride;
@@ -19,13 +21,13 @@ public class Reservation extends AbstractEntity<ReservationID> {
     @AttributeOverride(name="id", column = @Column(name="employee_id"))
     private DomainObjectId employee_id;
     @AttributeOverride(name="id", column = @Column(name="vehicle_id"))
-    private DomainObjectId vehicle_id;
+    private VehicleID vehicle_id;
     private LocalDateTime reservation_start;
     private LocalDateTime reservation_end;
 
     public Reservation(DomainObjectId client_id,
                        DomainObjectId employee_id,
-                       DomainObjectId vehicle_id,
+                       VehicleID vehicle_id,
                        LocalDateTime reservation_start,
                        LocalDateTime reservation_end){
         super(ReservationID.randomId(ReservationID.class));
@@ -42,7 +44,7 @@ public class Reservation extends AbstractEntity<ReservationID> {
     public Reservation(@NonNull ReservationID id,
                        DomainObjectId client_id,
                        DomainObjectId employee_id,
-                       DomainObjectId vehicle_id,
+                       VehicleID vehicle_id,
                        LocalDateTime reservation_start,
                        LocalDateTime reservation_end) {
         super(id);

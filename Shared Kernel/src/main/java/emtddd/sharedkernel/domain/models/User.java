@@ -4,9 +4,13 @@ import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.valueobjects.Email;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NonNull;
 
 @Entity
+@Table(name = "app_user")
+@Getter
 public class User extends AbstractEntity<UserID> {
     private String first_name;
     private String last_name;

@@ -3,7 +3,8 @@ package emtddd.sharedkernel.domain.base;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @MappedSuperclass
 @Embeddable
 @Getter
+@NoArgsConstructor
 public class DomainObjectId implements Serializable {
     private String id;
 
@@ -29,6 +31,10 @@ public class DomainObjectId implements Serializable {
         } catch (Exception ex) {
             throw new RuntimeException("Could not create new instance of " + idClass, ex);
         }
+    }
+
+    public static DomainObjectId of(@NonNull String id){
+        return new DomainObjectId(id);
     }
 
 }

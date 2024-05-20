@@ -1,11 +1,9 @@
-package emtddd.vehiclemanagement.domain.models;
+package emtddd.reservationmanagement.domain.valueobjects;
 
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import jakarta.persistence.Embeddable;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-
-import java.util.regex.Pattern;
 
 @Embeddable
 @NoArgsConstructor
