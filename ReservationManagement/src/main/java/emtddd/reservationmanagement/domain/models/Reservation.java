@@ -1,6 +1,5 @@
 package emtddd.reservationmanagement.domain.models;
 
-import emtddd.reservationmanagement.domain.valueobjects.Vehicle;
 import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
@@ -10,7 +9,7 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 
 @Entity
@@ -22,14 +21,14 @@ public class Reservation extends AbstractEntity<ReservationID> {
     private DomainObjectId employee_id;
     @AttributeOverride(name="id", column = @Column(name="vehicle_id"))
     private VehicleID vehicle_id;
-    private LocalDateTime reservation_start;
-    private LocalDateTime reservation_end;
+    private ZonedDateTime reservation_start;
+    private ZonedDateTime reservation_end;
 
     public Reservation(DomainObjectId client_id,
                        DomainObjectId employee_id,
                        VehicleID vehicle_id,
-                       LocalDateTime reservation_start,
-                       LocalDateTime reservation_end){
+                       ZonedDateTime reservation_start,
+                       ZonedDateTime reservation_end){
         super(ReservationID.randomId(ReservationID.class));
         this.client_id = client_id;
         this.employee_id = employee_id;
@@ -45,8 +44,8 @@ public class Reservation extends AbstractEntity<ReservationID> {
                        DomainObjectId client_id,
                        DomainObjectId employee_id,
                        VehicleID vehicle_id,
-                       LocalDateTime reservation_start,
-                       LocalDateTime reservation_end) {
+                       ZonedDateTime reservation_start,
+                       ZonedDateTime reservation_end) {
         super(id);
         this.client_id = client_id;
         this.employee_id = employee_id;

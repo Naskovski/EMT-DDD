@@ -34,6 +34,7 @@ public class VehicleClient {
             return restTemplate.exchange(uri().path("/api/vehicle/all").build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<List<Vehicle>>() {
             }).getBody();
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             return Collections.emptyList();
         }
     }

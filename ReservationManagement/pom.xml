@@ -25,6 +25,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -50,15 +55,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>8.0.1.Final</version>
 		</dependency>
-
-
-
 		<dependency>
-			<groupId>emt-ddd</groupId>
-			<artifactId>shared-kernel</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>runtime</scope>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
+
+
 		<dependency>
 			<groupId>emt-ddd</groupId>
 			<artifactId>shared-kernel</artifactId>

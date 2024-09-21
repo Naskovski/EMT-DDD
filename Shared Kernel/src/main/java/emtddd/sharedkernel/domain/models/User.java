@@ -6,10 +6,9 @@ import emtddd.sharedkernel.domain.valueobjects.Email;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NonNull;
 
 @Entity
-@Table(name = "app_user")
+@Table(name = "users")
 @Getter
 public class User extends AbstractEntity<UserID> {
     private String first_name;

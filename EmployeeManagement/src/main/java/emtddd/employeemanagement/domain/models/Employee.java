@@ -15,25 +15,20 @@ import lombok.Getter;
 @Getter
 public class Employee extends User {
 
-   @AttributeOverride(name="id", column = @Column(name="location_id"))
-   private DomainObjectId locationId;
+    @AttributeOverride(name = "id", column = @Column(name = "location_id"))
+    private DomainObjectId locationId;
 
-   public Employee(DomainObjectId location_id) {
-      super();
-      this.locationId = location_id;
-   }
+    public Employee() {
+    }
 
-   public Employee() {
-      super();
-   }
-   public Employee(EmployeeForm employeeForm){
-      super(employeeForm.getFirst_name(), employeeForm.getLast_name(), employeeForm.getEmail());
-      this.locationId = employeeForm.getLocation_id();
-   }
+    public Employee(EmployeeForm employeeForm) {
+        super(employeeForm.getFirst_name(), employeeForm.getLast_name(), employeeForm.getEmail());
+        this.locationId = employeeForm.getLocation_id();
+    }
 
-   public DomainObjectId relocate(DomainObjectId new_location_id){
-      this.locationId = new_location_id;
-      return this.locationId;
-   }
+    public DomainObjectId relocate(DomainObjectId new_location_id) {
+        this.locationId = new_location_id;
+        return this.locationId;
+    }
 
 }

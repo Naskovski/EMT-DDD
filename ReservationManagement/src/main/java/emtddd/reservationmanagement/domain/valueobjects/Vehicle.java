@@ -2,7 +2,7 @@ package emtddd.reservationmanagement.domain.valueobjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import emtddd.sharedkernel.domain.base.DomainObjectId;;
+import emtddd.sharedkernel.domain.base.DomainObjectId;
 import emtddd.sharedkernel.domain.base.ValueObject;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;

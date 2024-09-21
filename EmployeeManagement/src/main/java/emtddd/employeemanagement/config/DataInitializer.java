@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
-@Component
+//@Component
 @AllArgsConstructor
 public class DataInitializer {
     private final EmployeeRepository employeeRepository;

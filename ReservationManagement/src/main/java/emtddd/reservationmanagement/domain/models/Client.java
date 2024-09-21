@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Entity
-@Table(name = "client")
+@Table(name = "app_user")
 @Getter
 public class Client extends User {
 
@@ -16,16 +16,17 @@ public class Client extends User {
     public Client() {
         this.loyalty_points = 0;
     }
-    public Client(ClientForm clientForm){
+
+    public Client(ClientForm clientForm) {
         super(clientForm.getFirst_name(), clientForm.getLast_name(), clientForm.getEmail());
         this.loyalty_points = 0;
     }
 
-    public void addPoints(){
+    public void addPoints() {
         this.loyalty_points++;
     }
 
-    public void resetPoints(){
+    public void resetPoints() {
         this.loyalty_points = 0;
     }
 }

@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EmployeeManagement" />
+        <module name="shared-kernel" />
         <module name="ReservationManagement" />
-        <module name="EMT-DDD" />
         <module name="LocationManagement" />
         <module name="Shared Kernel" />
         <module name="VehicleManagement" />
@@ -23,6 +23,7 @@
       <module name="ReservationManagement" options="-parameters" />
       <module name="Shared Kernel" options="-parameters" />
       <module name="VehicleManagement" options="-parameters" />
+      <module name="shared-kernel" options="-parameters" />
     </option>
   </component>
 </project>

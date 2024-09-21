@@ -1,32 +1,32 @@
 package emtddd.reservationmanagement.service.forms;
 
 import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
-import emtddd.sharedkernel.domain.base.DomainObjectId;
+import emtddd.sharedkernel.domain.base.UserID;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @AllArgsConstructor
 public class ReservationForm {
 
     @NotNull
-    private DomainObjectId client_id;
+    private UserID clientId;
 
     @NotNull
-    private DomainObjectId employee_id;
+    private UserID employeeId;
 
     @NotNull
-    private VehicleID vehicle_id;
-
-    @NotNull
-    @Future
-    private LocalDateTime reservation_start;
+    private VehicleID vehicleId;
 
     @NotNull
     @Future
-    private LocalDateTime reservation_end;
+    private ZonedDateTime reservationStart;
+
+    @NotNull
+    @Future
+    private ZonedDateTime reservationEnd;
 }

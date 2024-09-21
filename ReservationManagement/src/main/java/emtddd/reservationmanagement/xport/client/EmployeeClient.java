@@ -1,7 +1,6 @@
 package emtddd.reservationmanagement.xport.client;
 
 import emtddd.reservationmanagement.domain.valueobjects.Employee;
-import emtddd.reservationmanagement.domain.valueobjects.Vehicle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -35,6 +34,7 @@ public class EmployeeClient {
             return restTemplate.exchange(uri().path("/api/employee/all").build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<List<Employee>>() {
             }).getBody();
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             return Collections.emptyList();
         }
     }
