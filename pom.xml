@@ -17,7 +17,7 @@
 
     <modules>
         <module>Shared Kernel</module>
-        <module>EmployeeManagement</module>
+        <module>UserManagement</module>
         <module>ReservationManagement</module>
         <module>VehicleManagement</module>
         <module>LocationManagement</module>

@@ -7,7 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="EmployeeManagement" />
+        <module name="UserManagement" />
         <module name="shared-kernel" />
         <module name="ReservationManagement" />
         <module name="LocationManagement" />
@@ -18,10 +18,10 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="EmployeeManagement" options="-parameters" />
       <module name="LocationManagement" options="-parameters" />
       <module name="ReservationManagement" options="-parameters" />
       <module name="Shared Kernel" options="-parameters" />
+      <module name="UserManagement" options="-parameters" />
       <module name="VehicleManagement" options="-parameters" />
       <module name="shared-kernel" options="-parameters" />
     </option>

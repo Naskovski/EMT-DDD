@@ -40,10 +40,9 @@ function Login() {
                 const token = data.token;
                 localStorage.setItem("accessToken", token);
                 setUser(token);
-                alert("Успешно се најавивте!");
                 navigate("/profile");
             } else {
-                alert("Неуспешна најава! Обидете се повторно.");
+                alert("Failed login, try again!");
             }
         } catch (error) {
             console.error("Грешка при најава: ", error);

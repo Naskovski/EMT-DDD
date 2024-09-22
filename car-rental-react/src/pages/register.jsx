@@ -34,17 +34,20 @@ function Register() {
                 method: "POST", headers: {
                     "Content-Type": "application/json",
                 }, body: JSON.stringify({
-                    firstName: name, email: email, password: password1,
+                    name: name,
+                    email: email,
+                    password: password1,
                 }),
             });
 
 
             if (response.ok) {
-                alert("You have successfully registered");
                 const data = await response.json();
                 setUser(jwtDecode(data.token));
                 localStorage.setItem("accessToken", data.token);
                 navigate("/login");
+            } else if (response.status === 409){
+                alert("An account with that email already exists.")
             } else {
                 alert("Failed registration. Try again!");
             }

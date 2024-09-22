@@ -2,27 +2,33 @@ package emtddd.sharedkernel.domain.models;
 
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.UserID;
+import emtddd.sharedkernel.domain.enums.Role;
 import emtddd.sharedkernel.domain.valueobjects.Email;
+import emtddd.sharedkernel.domain.valueobjects.Password;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Entity
 @Table(name = "users")
 @Getter
-public class User extends AbstractEntity<UserID> {
-    private String first_name;
-    private String last_name;
+public class User extends AbstractEntity<UserID>{
+    private String name;
     private Email email;
+    private Password password;
+    @Enumerated
+    private Role role;
 
     protected User() {
         super(UserID.randomId(UserID.class));
     }
 
-    public User(String first_name, String last_name, Email email) {
+    public User(String name, Email email, Password password, Role role) {
         super(UserID.randomId(UserID.class));
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.name = name;
         this.email = email;
+        this.password = password;
+        this.role = role;
     }
 }
