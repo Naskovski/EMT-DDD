@@ -5,6 +5,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import {AuthProvider} from "./AuthContext";
 import Header from "./components/header";
+import CreateReservationForm from "./components/createReservationForm";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/" element={<Homepage/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
+              <Route path="/create-reservation" element={<CreateReservationForm/>} />
               <Route path="*" element={<Navigate to={'/'}/>}/>
             </Routes>
           </BrowserRouter>

@@ -162,7 +162,7 @@ module.exports = {
       pink: colors.pink,
       rose: colors.rose,
       'dark-grey': '#2e2e2e',
-      'british-racing-green': '#004225',
+      'british-racing-green': '#1b2b25',
       'yellow-green-start': '#c0ff00',
       'yellow-green-end': '#94ff33',
     }),

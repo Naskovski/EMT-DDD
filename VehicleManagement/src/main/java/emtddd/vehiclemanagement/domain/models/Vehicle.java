@@ -2,11 +2,11 @@ package emtddd.vehiclemanagement.domain.models;
 
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
+import emtddd.sharedkernel.domain.valueobjects.Money;
 import emtddd.vehiclemanagement.service.form.VehicleForm;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -16,12 +16,13 @@ import java.util.regex.Pattern;
 @Getter
 public class Vehicle extends AbstractEntity<VehicleID> {
 
-    private String model_name;
-    private String gps_id;
+    private String modelName;
+    private String gpsId;
     private Status STATUS;
-    private String registration_plate;
+    private String registrationPlate;
     @AttributeOverride(name="id", column = @Column(name="location_id"))
     private DomainObjectId locationId;
+    private Money pricePerDay;
 
     private static final Pattern REGISTRATION_PATTERN = Pattern.compile("^[A-Z]{2}\\d{4}[A-Z]{2}$");
 
@@ -30,9 +31,10 @@ public class Vehicle extends AbstractEntity<VehicleID> {
         super(VehicleID.randomId(VehicleID.class));
         this.STATUS = Status.UNAVAILABLE;
         this.locationId = null;
-        this.model_name = "unknown";
-        this.gps_id = null;
-        this.registration_plate = null;
+        this.modelName = "unknown";
+        this.gpsId = null;
+        this.registrationPlate = null;
+        this.pricePerDay = new Money(0.0);
     }
 
 
@@ -41,13 +43,14 @@ public class Vehicle extends AbstractEntity<VehicleID> {
         super(VehicleID.randomId(VehicleID.class));
         this.STATUS = vehicleForm.getSTATUS();
         this.locationId = vehicleForm.getLocationId();
-        this.gps_id = vehicleForm.getGps_id();
-        this.model_name = vehicleForm.getModel_name();
+        this.gpsId = vehicleForm.getGpsId();
+        this.modelName = vehicleForm.getModelName();
+        this.pricePerDay = vehicleForm.getPricePerDay();
 
         if (!REGISTRATION_PATTERN.matcher(vehicleForm.getRegistrationPlate()).matches()) {
             throw new IllegalArgumentException("Invalid vehicle ID format.");
         }
-        this.registration_plate = vehicleForm.getRegistrationPlate();
+        this.registrationPlate = vehicleForm.getRegistrationPlate();
     }
 
     public boolean rent(){

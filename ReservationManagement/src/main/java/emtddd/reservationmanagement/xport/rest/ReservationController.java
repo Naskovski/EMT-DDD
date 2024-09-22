@@ -16,6 +16,7 @@ public class ReservationController {
 
     @PostMapping("/create")
     public void createReservation (@RequestBody ReservationForm reservation) {
+        System.out.println("received:");
         reservationService.placeReservation(reservation);
     }
 }

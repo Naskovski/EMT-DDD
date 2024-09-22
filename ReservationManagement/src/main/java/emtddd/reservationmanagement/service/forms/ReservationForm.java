@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
 import java.time.ZonedDateTime;
 
@@ -16,7 +17,6 @@ public class ReservationForm {
     @NotNull
     private UserID clientId;
 
-    @NotNull
     private UserID employeeId;
 
     @NotNull

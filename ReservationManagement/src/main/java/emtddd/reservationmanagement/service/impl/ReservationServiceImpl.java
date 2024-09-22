@@ -2,7 +2,7 @@ package emtddd.reservationmanagement.service.impl;
 
 import emtddd.reservationmanagement.domain.models.Reservation;
 import emtddd.reservationmanagement.domain.models.ReservationID;
-import emtddd.reservationmanagement.domain.repository.ClientRepository;
+//import emtddd.reservationmanagement.domain.repository.ClientRepository;
 import emtddd.reservationmanagement.domain.repository.ReservationRepository;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final ClientRepository clientRepository;
+//    private final ClientRepository clientRepository;
     private final Validator validator;
     private final DomainEventPublisher domainEventPublisher;
 
@@ -33,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
         Objects.requireNonNull(reservationForm, "reservation must not be null.");
         var constraintViolations = validator.validate(reservationForm);
         if (!constraintViolations.isEmpty()) {
+            constraintViolations.forEach(System.err::println);
             throw new ConstraintViolationException("The order form is not valid", constraintViolations);
         }
         var newReservation = reservationRepository.saveAndFlush(toDomainObject(reservationForm));
