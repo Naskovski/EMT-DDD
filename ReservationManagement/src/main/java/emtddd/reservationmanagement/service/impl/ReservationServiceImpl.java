@@ -3,15 +3,21 @@ package emtddd.reservationmanagement.service.impl;
 import emtddd.reservationmanagement.domain.models.Reservation;
 import emtddd.reservationmanagement.domain.models.ReservationID;
 //import emtddd.reservationmanagement.domain.repository.ClientRepository;
+import emtddd.reservationmanagement.domain.models.ReservationStatus;
 import emtddd.reservationmanagement.domain.repository.ReservationRepository;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
+import emtddd.sharedkernel.domain.base.UserID;
+import emtddd.sharedkernel.domain.events.reservations.ReservationCancelledEvent;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCreatedEvent;
+import emtddd.sharedkernel.domain.exceptions.InvalidIdException;
 import emtddd.sharedkernel.infra.DomainEventPublisher;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,10 +51,10 @@ public class ReservationServiceImpl implements ReservationService {
 
         ReservationCreatedEvent event = new ReservationCreatedEvent(
                 newReservation.getId(),
-                newReservation.getVehicle_id(),
-                newReservation.getClient_id(),
-                newReservation.getReservation_start(),
-                newReservation.getReservation_end()
+                newReservation.getVehicleID(),
+                newReservation.getClientId(),
+                newReservation.getReservationStart(),
+                newReservation.getReservationEnd()
         );
         domainEventPublisher.publish(event);
 
@@ -56,9 +62,31 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public ReservationID cancelReservation(ReservationID reservationID) throws InvalidIdException {
+        Reservation reservation = this.findById(reservationID).orElseThrow(InvalidIdException::new);
+        reservation.setReservationStatus(ReservationStatus.CANCELED);
+        ReservationCancelledEvent event = new ReservationCancelledEvent(
+                reservation.getId(),
+                reservation.getVehicleID(),
+                reservation.getClientId(),
+                reservation.getReservationStart(),
+                reservation.getReservationEnd()
+        );
+        domainEventPublisher.publish(event);
+
+        return reservation.getId();
+    }
+
+    @Override
     public List<Reservation> listAll() {
         return reservationRepository.findAll();
     }
+
+    @Override
+    public Page<Reservation> findAllByClient(UserID clientId, Pageable pageable) {
+        return reservationRepository.findAllByClientIdOrderByReservationStart(clientId, pageable);
+    }
+
 
     @Override
     public Optional<Reservation> findById(ReservationID id) {

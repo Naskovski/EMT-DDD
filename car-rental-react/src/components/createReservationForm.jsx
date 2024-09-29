@@ -54,7 +54,7 @@ function CreateReservationForm() {
 
         console.log('user: ', user)
         const reservationData = {
-            clientId,
+            clientId: user?.userId,
             employeeId,
             vehicleId: vehicle.vehicleId,
             reservationStart: new Date(reservationStart).toISOString(),

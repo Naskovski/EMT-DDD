@@ -7,8 +7,9 @@ function Header(){
     const navigate = useNavigate();
 
     const logout = () => {
-        localStorage.removeItem("accessToken"); // Избриши го токенот
-        setUser(null); // Сетирај го корисникот на null
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
+        setUser(null);
     };
 
     return (

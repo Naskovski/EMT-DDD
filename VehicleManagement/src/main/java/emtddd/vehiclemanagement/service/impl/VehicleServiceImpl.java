@@ -1,6 +1,7 @@
 package emtddd.vehiclemanagement.service.impl;
 
 import emtddd.sharedkernel.domain.base.DomainObjectId;
+import emtddd.sharedkernel.domain.events.reservations.ReservationCancelledEvent;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCreatedEvent;
 import emtddd.vehiclemanagement.domain.exceptions.VehicleIdDoesNotExistException;
 import emtddd.vehiclemanagement.domain.exceptions.VehicleNotAvailableException;
@@ -124,5 +125,16 @@ public class VehicleServiceImpl implements VehicleService {
                 .orElseThrow(VehicleIdDoesNotExistException::new);
 
         updateVehicleStatus(vehicle, Status.RENTED, startDate, endDate);
+    }
+
+    @Override
+    public void handleReservationCancelled(ReservationCancelledEvent event) {
+        LocalDate startDate = event.getReservationStart().toLocalDate();
+        LocalDate endDate = event.getReservationEnd().toLocalDate();
+
+        Vehicle vehicle = vehicleRepository.findById(new VehicleID(event.getVehicleId().getId()))
+                .orElseThrow(VehicleIdDoesNotExistException::new);
+
+        updateVehicleStatus(vehicle, Status.AVAILABLE, startDate, endDate);
     }
 }

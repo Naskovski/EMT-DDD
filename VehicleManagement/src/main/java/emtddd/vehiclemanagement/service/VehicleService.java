@@ -1,6 +1,7 @@
 package emtddd.vehiclemanagement.service;
 
 import emtddd.sharedkernel.domain.base.DomainObjectId;
+import emtddd.sharedkernel.domain.events.reservations.ReservationCancelledEvent;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCreatedEvent;
 import emtddd.vehiclemanagement.domain.models.Status;
 import emtddd.vehiclemanagement.domain.models.Vehicle;
@@ -24,4 +25,5 @@ public interface VehicleService {
     List<VehicleDto> findAllAvailable();
     void updateVehicleStatus(Vehicle vehicle, Status status, LocalDate startDate, LocalDate endDate);
     void handleReservationCreated(ReservationCreatedEvent event);
+    void handleReservationCancelled(ReservationCancelledEvent event);
 }

@@ -45,6 +45,7 @@ function Register() {
                 const data = await response.json();
                 setUser(jwtDecode(data.token));
                 localStorage.setItem("accessToken", data.token);
+                localStorage.setItem("user", data);
                 navigate("/login");
             } else if (response.status === 409){
                 alert("An account with that email already exists.")
