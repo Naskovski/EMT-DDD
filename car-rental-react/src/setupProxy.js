@@ -8,10 +8,19 @@ module.exports = function(app) {
             changeOrigin: true,
             logLevel: 'debug',
         })
-    );    app.use(
+    );
+    app.use(
         '/api/reservation',
         legacyCreateProxyMiddleware({
             target: 'http://localhost:9091',
+            logLevel: 'debug',
+            changeOrigin: true,
+        })
+    );
+    app.use(
+        '/api/vehicle',
+        legacyCreateProxyMiddleware({
+            target: 'http://localhost:9094',
             logLevel: 'debug',
             changeOrigin: true,
         })

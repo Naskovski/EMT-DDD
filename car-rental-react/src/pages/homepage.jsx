@@ -1,74 +1,31 @@
 import '../App.css';
 import Carousel from "../components/Carousel";
 import VehicleCard from "../components/VehicleCard";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
-const vehicleData = [
-    {
-        modelName: 'Tesla Model S',
-        registrationPlate: 'AB123CD',
-        location: 'London, UK',
-        pricePerDay: 100,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    },
-    {
-        modelName: 'Ford Mustang',
-        registrationPlate: 'EF456GH',
-        location: 'New York, USA',
-        pricePerDay: 120,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    }, {
-        modelName: 'Tesla Model S',
-        registrationPlate: 'AB123CD',
-        location: 'London, UK',
-        pricePerDay: 100,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    },
-    {
-        modelName: 'Ford Mustang',
-        registrationPlate: 'EF456GH',
-        location: 'New York, USA',
-        pricePerDay: 120,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    }, {
-        modelName: 'Tesla Model S',
-        registrationPlate: 'AB123CD',
-        location: 'London, UK',
-        pricePerDay: 100,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    },
-    {
-        modelName: 'Ford Mustang',
-        registrationPlate: 'EF456GH',
-        location: 'New York, USA',
-        pricePerDay: 120,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    }, {
-        modelName: 'Tesla Model S',
-        registrationPlate: 'AB123CD',
-        location: 'London, UK',
-        pricePerDay: 100,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    },
-    {
-        modelName: 'Ford Mustang',
-        registrationPlate: 'EF456GH',
-        location: 'New York, USA',
-        pricePerDay: 120,
-        id: '7b1eaf87-ab74-4527-b9af-99400ec2bc49',
-    },
-    // Add more vehicles as needed
-];
-
-const v2 = {
-    modelName: 'Tesla Model NO',
-    registrationPlate: 'AB123CD',
-    location: 'London, UK',
-    pricePerDay: 100,
-}
 
 
 function Homepage() {
+    const navigate = useNavigate();
+    const [vehicles, setVehicles] = useState([]);
+
+    useEffect(() => {
+        const fetchAvailableVehicles = async () => {
+            try {
+                const response = await fetch(`/api/vehicle/available`);
+                const vehi = await response.json();
+                // console.log(await response.json())
+                setVehicles(vehi);
+            } catch (error) {
+                console.error("Error fetching available dates:", error);
+            }
+        };
+
+        fetchAvailableVehicles();
+    }, []);
+
     return (
         <div className="homepage px-20">
             <div className="w-1/2 custom-bg-gradient-neon p-5 rounded-2xl m-6">
@@ -77,13 +34,13 @@ function Homepage() {
                 </span>
                 <span className="text-6xl"></span>
                 <Carousel>
-                    {vehicleData.map((vehicle, index) => (
+                    {vehicles.map((vehicle, index) => (
                         <VehicleCard key={index} vehicle={vehicle}/>
                     ))}
-                </Carousel>
-            </div>
 
-            <VehicleCard vehicle={v2}/>
+                </Carousel>
+                {vehicles.length === 0 && <h2 className="text-center "> Sorrry, Currently no cars are available</h2>}
+            </div>
         </div>
     );
 }

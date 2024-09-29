@@ -17,7 +17,7 @@ const VehicleCard = ({vehicle}) => {
             onClick={handleClick}
         >
             <div className="p-6">
-                <h2 className="text-2xl font-bold mb-2">Model Name: {vehicle.modelName}</h2>
+                <h2 className="text-2xl font-bold mb-2">{vehicle.modelName}</h2>
                 <p className="mb-2">
                     <span className="font-semibold">Registration Plate:</span> {vehicle.registrationPlate}
                 </p>
