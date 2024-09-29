@@ -41,11 +41,10 @@ function Homepage() {
                     {vehicles.map((vehicle, index) => (
                         <VehicleCard key={index} vehicle={vehicle}/>
                     ))}
-
                 </Carousel>
-                {vehicles.length === 0 && <h2 className="text-center "> Sorrry, Currently no cars are available</h2>}
+                {vehicles.length === 0 && <h2 className="text-center "> Sorry, currently no cars are available</h2>}
             </div>
-            {user && <div className="w-1/3 bg-red-500 p-5 rounded-2xl m-6 inline-block">
+            {user && <div className="w-1/3 bg-opacity-10 bg-white p-5 rounded-2xl m-6 inline-block">
                 <ReservationsList clientId={user?.userId} />
             </div>}
         </div>
