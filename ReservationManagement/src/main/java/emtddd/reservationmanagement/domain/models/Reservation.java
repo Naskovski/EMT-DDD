@@ -23,6 +23,7 @@ public class Reservation extends AbstractEntity<ReservationID> {
     private VehicleID vehicle_id;
     private ZonedDateTime reservation_start;
     private ZonedDateTime reservation_end;
+    private ReservationStatus reservation_status;
 
     public Reservation(DomainObjectId client_id,
                        DomainObjectId employee_id,
@@ -35,6 +36,7 @@ public class Reservation extends AbstractEntity<ReservationID> {
         this.vehicle_id = vehicle_id;
         this.reservation_start = reservation_start;
         this.reservation_end = reservation_end;
+        this.reservation_status = ReservationStatus.RESERVED;
     }
     public Reservation(){
         super(ReservationID.randomId(ReservationID.class));
@@ -52,5 +54,6 @@ public class Reservation extends AbstractEntity<ReservationID> {
         this.vehicle_id = vehicle_id;
         this.reservation_start = reservation_start;
         this.reservation_end = reservation_end;
+        this.reservation_status = ReservationStatus.RESERVED;
     }
 }

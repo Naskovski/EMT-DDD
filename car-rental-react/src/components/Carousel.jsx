@@ -16,7 +16,7 @@ const Carousel = ({ children }) => {
         <div className="relative overflow-hidden">
             <div className="flex transition-transform duration-300" style={{ transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)` }}>
                 {React.Children.map(children, (child, index) => (
-                    <div key={index} className="min-w-0 flex-shrink-0 w-1/3 p-4">
+                    <div key={index} className="p-4">
                         {child}
                     </div>
                 ))}

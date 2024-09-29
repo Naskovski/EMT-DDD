@@ -308,6 +308,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
+        '"Fredoka"',
         'ui-sans-serif',
         'system-ui',
         'sans-serif',

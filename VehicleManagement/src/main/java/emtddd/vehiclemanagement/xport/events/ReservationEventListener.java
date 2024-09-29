@@ -20,7 +20,7 @@ public class ReservationEventListener {
         try {
             ReservationCreatedEvent event = DomainEvent.fromJson(jsonMessage, ReservationCreatedEvent.class);
             System.out.println("Processed ReservationCreatedEvent: " + event.toString());
-//            vehicleService.handleReservation(event);
+            vehicleService.handleReservationCreated(event);
         } catch (JsonProcessingException e) {
             System.err.println("Failed to deserialize ReservationCreatedEvent: " + e.getMessage());
         }

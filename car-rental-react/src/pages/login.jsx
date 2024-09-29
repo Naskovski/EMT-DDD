@@ -39,6 +39,7 @@ function Login() {
                 const data = await response.json();
                 const token = data.token;
                 localStorage.setItem("accessToken", token);
+                localStorage.setItem("user", data);
                 setUser(data);
                 navigate("/profile");
             } else {

@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 @Embeddable
 @NoArgsConstructor
-public class VehicleID extends DomainObjectId {
-    public VehicleID(@NonNull String id) {
+public class StatusOnDateID extends DomainObjectId {
+    public StatusOnDateID(@NonNull String id) {
         super(id);
     }
 }

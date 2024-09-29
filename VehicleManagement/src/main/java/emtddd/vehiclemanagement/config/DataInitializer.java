@@ -11,22 +11,22 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Component
-@AllArgsConstructor
-public class DataInitializer {
-    private final VehicleRepository vehicleRepository;
-
-    @PostConstruct
-    public void initData(){
-        Vehicle v1 = new Vehicle(new VehicleForm("KU1234AB", "VW GOLF", "qwerty", Status.AVAILABLE,  DomainObjectId.of("1") ));
-        Vehicle v2 = new Vehicle(new VehicleForm("KU1122AB", "FORD FOCUS", "asf", Status.AVAILABLE,  DomainObjectId.of("1") ));
-        Vehicle v3 = new Vehicle(new VehicleForm("SK2434AB", "ALFA ROMEO BRERA", "zxcvb", Status.AVAILABLE,  DomainObjectId.of("2") ));
-        Vehicle v4 = new Vehicle(new VehicleForm("BT1234AB", "SKODA OCTAVIA", "poiuyt", Status.AVAILABLE,  DomainObjectId.of("3") ));
-
-        if(vehicleRepository.findAll().isEmpty()){
-            vehicleRepository.saveAll(Arrays.asList(v1, v2, v3, v4));
-        }
-
-    }
-
-}
+//@Component
+//@AllArgsConstructor
+//public class DataInitializer {
+//    private final VehicleRepository vehicleRepository;
+//
+//    @PostConstruct
+//    public void initData(){
+//        Vehicle v1 = new Vehicle(new VehicleForm("KU1234AB", "VW GOLF", "qwerty", Status.AVAILABLE,  DomainObjectId.of("1") ));
+//        Vehicle v2 = new Vehicle(new VehicleForm("KU1122AB", "FORD FOCUS", "asf", Status.AVAILABLE,  DomainObjectId.of("1") ));
+//        Vehicle v3 = new Vehicle(new VehicleForm("SK2434AB", "ALFA ROMEO BRERA", "zxcvb", Status.AVAILABLE,  DomainObjectId.of("2") ));
+//        Vehicle v4 = new Vehicle(new VehicleForm("BT1234AB", "SKODA OCTAVIA", "poiuyt", Status.AVAILABLE,  DomainObjectId.of("3") ));
+//
+//        if(vehicleRepository.findAll().isEmpty()){
+//            vehicleRepository.saveAll(Arrays.asList(v1, v2, v3, v4));
+//        }
+//
+//    }
+//
+//}
