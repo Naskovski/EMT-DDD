@@ -6,22 +6,29 @@ import Register from "./pages/register";
 import {AuthProvider} from "./AuthContext";
 import Header from "./components/header";
 import CreateReservationForm from "./components/createReservationForm";
+import EmployeePage from "./pages/employeePage";
+import AdminCreateReservation from "./components/AdminCreateReservation";
+import AdminReservationsList from "./components/AdminReservationsList";
 
 function App() {
   return (
       <AuthProvider>
-        <div className="min-h-screen bg-racing-green-gradient text-white">
           <BrowserRouter>
               <Header/>
             <Routes>
               <Route path="/" element={<Homepage/>}/>
+                <Route path="/empPanel" element={<EmployeePage/>}>
+                    <Route path="create" element={<AdminCreateReservation />} />
+                    <Route path="pending" element={<AdminReservationsList status="RESERVED" />} />
+                    <Route path="started" element={<AdminReservationsList status="STARTED" />} />
+                    <Route path="completed" element={<AdminReservationsList status="COMPLETED" />} />
+                </Route>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
               <Route path="/create-reservation" element={<CreateReservationForm/>} />
               <Route path="*" element={<Navigate to={'/'}/>}/>
             </Routes>
           </BrowserRouter>
-        </div>
       </AuthProvider>
   );
 }

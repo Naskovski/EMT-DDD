@@ -25,20 +25,20 @@ const ReservationCard = ({ reservation, onCancel }) => {
     const getStatusStyles = () => {
         switch (reservationStatus) {
             case "RESERVED":
-                return "bg-yellow-500";
+                return "bg-green-700";
             case "STARTED":
-                return "bg-blue-500";
+                return "bg-blue-700";
             case "COMPLETED":
-                return "bg-green-500";
+                return "bg-sky-950";
             case "CANCELED":
-                return "bg-red-500";
+                return "bg-red-700";
             default:
-                return "bg-gray-500";
+                return "bg-gray-700";
         }
     };
 
     return (
-        <div className={`max-w-md mx-auto my-4 p-6 rounded-lg shadow-lg text-white ${getStatusStyles()}`}>
+        <div className={`max-w-md mx-auto my-4 p-6 rounded-lg bg- shadow-lg text-white ${getStatusStyles()}`}>
             <h2 className="text-xl font-bold mb-2">Reservation for Vehicle {vehicleID.id}</h2>
             {user.userId !== clientId.id && <p className="mb-2">Client ID: {clientId.id}</p>}
             {(user.userId === clientId.id && employeeID.id === 'null')?<p>This reservation was created by <em>you</em>.</p> :<p className="mb-2">Employee ID: {employeeID.id}</p>}

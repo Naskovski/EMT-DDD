@@ -2,9 +2,9 @@ package emtddd.reservationmanagement.service.impl;
 
 import emtddd.reservationmanagement.domain.models.Reservation;
 import emtddd.reservationmanagement.domain.models.ReservationID;
-//import emtddd.reservationmanagement.domain.repository.ClientRepository;
 import emtddd.reservationmanagement.domain.models.ReservationStatus;
 import emtddd.reservationmanagement.domain.repository.ReservationRepository;
+import emtddd.reservationmanagement.domain.valueobjects.LocationID;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
 import emtddd.sharedkernel.domain.base.UserID;
@@ -30,7 +30,6 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
-//    private final ClientRepository clientRepository;
     private final Validator validator;
     private final DomainEventPublisher domainEventPublisher;
 
@@ -53,6 +52,7 @@ public class ReservationServiceImpl implements ReservationService {
                 newReservation.getId(),
                 newReservation.getVehicleID(),
                 newReservation.getClientId(),
+                newReservation.getLocationId(),
                 newReservation.getReservationStart(),
                 newReservation.getReservationEnd()
         );
@@ -69,6 +69,7 @@ public class ReservationServiceImpl implements ReservationService {
                 reservation.getId(),
                 reservation.getVehicleID(),
                 reservation.getClientId(),
+                reservation.getLocationId(),
                 reservation.getReservationStart(),
                 reservation.getReservationEnd()
         );
@@ -93,10 +94,16 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findById(id);
     }
 
+    @Override
+    public Page<Reservation> findAllByStatusAndLocation(ReservationStatus status, LocationID locationId, Pageable pageable) {
+        return reservationRepository.findAllByLocationIdAndReservationStatusOrderByReservationStart(locationId, status, pageable);
+    }
+
     private Reservation toDomainObject(ReservationForm reservationForm) {
         return new Reservation(reservationForm.getClientId(),
                 reservationForm.getEmployeeId(),
                 reservationForm.getVehicleId(),
+                reservationForm.getLocationId(),
                 reservationForm.getReservationStart(),
                 reservationForm.getReservationEnd());
     }

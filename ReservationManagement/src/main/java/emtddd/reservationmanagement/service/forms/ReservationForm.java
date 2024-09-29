@@ -1,5 +1,6 @@
 package emtddd.reservationmanagement.service.forms;
 
+import emtddd.reservationmanagement.domain.valueobjects.LocationID;
 import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
 import emtddd.sharedkernel.domain.base.UserID;
 import jakarta.validation.constraints.Future;
@@ -21,6 +22,9 @@ public class ReservationForm {
 
     @NotNull
     private VehicleID vehicleId;
+
+    @NotNull
+    private LocationID locationId;
 
     @NotNull
     @Future

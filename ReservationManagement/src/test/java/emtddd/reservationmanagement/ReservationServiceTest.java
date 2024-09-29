@@ -26,8 +26,6 @@ public class ReservationServiceTest {
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
-    private ClientService clientService;
 
     @Autowired
     private VehicleClient vehicleClient;

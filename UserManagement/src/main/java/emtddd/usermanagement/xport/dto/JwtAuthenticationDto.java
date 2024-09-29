@@ -12,4 +12,5 @@ public class JwtAuthenticationDto {
     private String email;
     private String name;
     private Role role;
+    private String locationId;
 }

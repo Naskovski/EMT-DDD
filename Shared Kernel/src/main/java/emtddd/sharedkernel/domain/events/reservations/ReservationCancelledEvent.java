@@ -14,6 +14,7 @@ public class ReservationCancelledEvent extends DomainEvent {
     private final DomainObjectId reservationId;
     private final DomainObjectId vehicleId;
     private final DomainObjectId clientId;
+    private final DomainObjectId locationId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private final ZonedDateTime reservationStart;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -24,12 +25,14 @@ public class ReservationCancelledEvent extends DomainEvent {
             @JsonProperty("reservationId") DomainObjectId reservationId,
             @JsonProperty("vehicleId") DomainObjectId vehicleId,
             @JsonProperty("clientId") DomainObjectId clientId,
+            @JsonProperty("locationId") DomainObjectId locationId,
             @JsonProperty("reservationStart") ZonedDateTime reservationStart,
             @JsonProperty("reservationEnd") ZonedDateTime reservationEnd) {
         super("reservation-cancelled");
         this.reservationId = reservationId;
         this.vehicleId = vehicleId;
         this.clientId = clientId;
+        this.locationId = locationId;
         this.reservationStart = reservationStart;
         this.reservationEnd = reservationEnd;
     }

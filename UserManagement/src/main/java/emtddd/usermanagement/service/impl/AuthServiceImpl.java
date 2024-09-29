@@ -1,7 +1,9 @@
 package emtddd.usermanagement.service.impl;
 
+import emtddd.sharedkernel.domain.enums.Role;
 import emtddd.sharedkernel.domain.valueobjects.Password;
 import emtddd.usermanagement.domain.models.Client;
+import emtddd.usermanagement.domain.models.Employee;
 import emtddd.usermanagement.domain.repository.ClientRepository;
 import emtddd.usermanagement.exceptions.EmailAlreadyTakenException;
 import emtddd.usermanagement.service.AuthService;
@@ -60,6 +62,11 @@ public class AuthServiceImpl implements AuthService {
         jwtAuthenticationDto.setRole(userEntity.getRole());
         jwtAuthenticationDto.setName(userEntity.getName());
         jwtAuthenticationDto.setUserId(userEntity.getId().getId());
+
+        if (userEntity.getRole() == Role.EMPLOYEE) {
+            Employee employee = (Employee) userEntity;  // Cast to Employee
+            jwtAuthenticationDto.setLocationId(employee.getLocationId().getId());  // Access locationId
+        }
 
         return jwtAuthenticationDto;
     }

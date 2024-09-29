@@ -2,10 +2,13 @@ package emtddd.reservationmanagement.xport.rest;
 
 import emtddd.reservationmanagement.domain.models.Reservation;
 import emtddd.reservationmanagement.domain.models.ReservationID;
+import emtddd.reservationmanagement.domain.models.ReservationStatus;
 import emtddd.reservationmanagement.domain.repository.ReservationRepository;
 import emtddd.reservationmanagement.domain.valueobjects.LocationID;
+import emtddd.reservationmanagement.domain.valueobjects.Status;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
+import emtddd.sharedkernel.domain.base.DomainObjectId;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.exceptions.InvalidIdException;
 import lombok.AllArgsConstructor;
@@ -46,6 +49,16 @@ public class ReservationController {
             Pageable pageable) {
         UserID userID = new UserID(clientId);
         Page<Reservation> reservations = reservationService.findAllByClient(userID, pageable);
+        return ResponseEntity.ok(reservations);
+    }
+
+    @GetMapping("/filter/status/{status}/{locationId}")
+    public ResponseEntity<Page<Reservation>> getReservationsByStatusAndLocation(
+            @PathVariable ReservationStatus status,
+            @PathVariable String locationId,
+            Pageable pageable) {
+        LocationID locationID = new LocationID(locationId);
+        Page<Reservation> reservations = reservationService.findAllByStatusAndLocation(status, locationID, pageable);
         return ResponseEntity.ok(reservations);
     }
 }

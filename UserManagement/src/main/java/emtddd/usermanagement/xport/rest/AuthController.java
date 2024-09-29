@@ -48,7 +48,8 @@ public class AuthController {
         } catch (DisabledException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         } catch (Exception e) {
-            System.err.printf("Login error: ", e);
+//            System.err.printf("Login error: ", e);
+            System.err.println(Arrays.toString(e.getStackTrace()));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

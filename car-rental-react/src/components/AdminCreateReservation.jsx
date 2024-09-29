@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {AuthContext} from "../AuthContext";
 import CalendarComponent from "./calendarComponent";
 
-function CreateReservationForm() {
+function AdminCreateReservation() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(AuthContext);
     const location = useLocation();
@@ -57,7 +57,6 @@ function CreateReservationForm() {
             clientId: user?.userId,
             employeeId,
             vehicleId: vehicle.vehicleId,
-            locationId: vehicle.locationId.id,
             reservationStart: new Date(reservationStart).toISOString(),
             reservationEnd: new Date(reservationEnd).toISOString(),
         };
@@ -87,7 +86,7 @@ function CreateReservationForm() {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="bg-dark-grey p-8 rounded-lg shadow-lg w-1/2 m-12" style={{minWidth: '60rem'}}>
-                <h1 className="text-3xl font-bold mb-6 text-center">Create Reservation</h1>
+                <h1 className="text-3xl font-bold mb-6 text-center">ADMIN Create Reservation</h1>
                 <form id="input-fields" className="space-y-4" onSubmit={handleReservationSubmit}>
                     <div className={'flex w-full justify-around'}>
                         <div style={{width: '30rem', maxWidth: '50rem'}}>
@@ -103,7 +102,7 @@ function CreateReservationForm() {
                             <h3 className={'text-3xl my-16 font-bold'}>Vehicle details</h3>
                             <p>{vehicle.modelName}</p>
                             <p>Registration Plate: {vehicle.registrationPlate}</p>
-                            <p>Location: {vehicle.locationId.id}</p>
+                            <p>Location: {vehicle.location}</p>
                             <p>Price per Day: {vehicle.pricePerDay}€</p>
                         </div>
                     </div>
@@ -124,4 +123,4 @@ function CreateReservationForm() {
     );
 }
 
-export default CreateReservationForm;
+export default AdminCreateReservation;

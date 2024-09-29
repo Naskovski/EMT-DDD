@@ -23,7 +23,7 @@ const VehicleCard = ({vehicle}) => {
                     <span className="font-semibold">Registration Plate:</span> {vehicle.registrationPlate}
                 </p>
                 <p className="mb-2">
-                    <span className="font-semibold">Location:</span> {vehicle.location}
+                    <span className="font-semibold">Location:</span> {vehicle.locationId.id}
                 </p>
                 <p className="mb-2">
                     <span className="font-semibold">Price per day:</span> {vehicle.pricePerDay}€

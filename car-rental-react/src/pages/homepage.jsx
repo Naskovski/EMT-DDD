@@ -15,7 +15,8 @@ function Homepage() {
     const { user, setUser } = useContext(AuthContext);
 
     useEffect(() => {
-        console.log('userid: ', user?user:'ternary operator - no user')
+        if(user?.role === 'EMPLOYEE') navigate('/empPanel')
+
         const fetchAvailableVehicles = async () => {
             try {
                 const response = await fetch(`/api/vehicle/available`);

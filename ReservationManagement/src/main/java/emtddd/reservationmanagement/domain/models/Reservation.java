@@ -1,5 +1,6 @@
 package emtddd.reservationmanagement.domain.models;
 
+import emtddd.reservationmanagement.domain.valueobjects.LocationID;
 import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.UserID;
@@ -27,6 +28,9 @@ public class Reservation extends AbstractEntity<ReservationID> {
     @Embedded
     @AttributeOverride(name="id", column = @Column(name="vehicle_id"))
     private VehicleID vehicleID;
+    @Embedded
+    @AttributeOverride(name="id", column = @Column(name="location_id"))
+    private LocationID locationId;
     private ZonedDateTime reservationStart;
     private ZonedDateTime reservationEnd;
     @Setter
@@ -35,12 +39,14 @@ public class Reservation extends AbstractEntity<ReservationID> {
     public Reservation(UserID clientId,
                        UserID EmployeeID,
                        VehicleID VehicleID,
+                       LocationID locationId,
                        ZonedDateTime reservationStart,
                        ZonedDateTime reservationEnd){
         super(ReservationID.randomId(ReservationID.class));
         this.clientId = clientId;
         this.employeeID = EmployeeID;
         this.vehicleID = VehicleID;
+        this.locationId = locationId;
         this.reservationStart = reservationStart;
         this.reservationEnd = reservationEnd;
         this.reservationStatus = ReservationStatus.RESERVED;
@@ -53,12 +59,14 @@ public class Reservation extends AbstractEntity<ReservationID> {
                        UserID clientId,
                        UserID EmployeeID,
                        VehicleID VehicleID,
+                       LocationID locationId,
                        ZonedDateTime reservationStart,
                        ZonedDateTime reservationEnd) {
         super(id);
         this.clientId = clientId;
         this.employeeID = EmployeeID;
         this.vehicleID = VehicleID;
+        this.locationId = locationId;
         this.reservationStart = reservationStart;
         this.reservationEnd = reservationEnd;
         this.reservationStatus = ReservationStatus.RESERVED;
