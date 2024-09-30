@@ -12,6 +12,7 @@ function EmployeePage() {
     const { user, setUser } = useContext(AuthContext);
 
     useEffect(() => {
+        navigate('/empPanel/pending')
         console.log('userid: ', user?user:'ternary operator - no user')
         const fetchAvailableVehicles = async () => {
             try {
@@ -39,24 +40,29 @@ function EmployeePage() {
                     </li>
                     <li>
                         <Link to="/empPanel/pending" className="text-white bg-dark-grey hover:bg-gray-700 py-2 px-4 rounded-lg block text-center">
-                            View Pending Reservations
+                            Pending Reservations
                         </Link>
                     </li>
                     <li>
                         <Link to="/empPanel/started" className="text-white bg-dark-grey hover:bg-gray-700 py-2 px-4 rounded-lg block text-center">
-                            View Started Reservations
+                            In-progress Reservations
                         </Link>
                     </li>
                     <li>
                         <Link to="/empPanel/completed" className="text-white bg-dark-grey hover:bg-gray-700 py-2 px-4 rounded-lg block text-center">
-                            View Completed Reservations
+                            Completed Reservations
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/empPanel/cancelled" className="text-white bg-dark-grey hover:bg-gray-700 py-2 px-4 rounded-lg block text-center">
+                            Cancelled Reservations
                         </Link>
                     </li>
                 </ul>
             </div>
 
             {/* Main Content */}
-            <div className="w-3/4 p-4 rounded-2xl bg-opacity-10 bg-white h-2/3">
+            <div className="w-3/4 p-4 rounded-2xl bg-opacity-10 bg-white h-auto max-h-fit overflow-y-scroll my-5">
                 <Outlet /> {/* This will render the components based on the route */}
             </div>
         </div>

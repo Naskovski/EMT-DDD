@@ -26,4 +26,5 @@ public interface VehicleService {
     void updateVehicleStatus(Vehicle vehicle, Status status, LocalDate startDate, LocalDate endDate);
     void handleReservationCreated(ReservationCreatedEvent event);
     void handleReservationCancelled(ReservationCancelledEvent event);
+    void handleReservationCompleted(ReservationCancelledEvent event);
 }

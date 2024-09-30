@@ -26,6 +26,7 @@ public class ReservationEventListener {
             System.err.println("Failed to deserialize ReservationCreatedEvent: " + e.getMessage());
         }
     }
+
     @KafkaListener(topics = TopicHolder.TOPIC_RESERVATION_CANCELLED, groupId = "reservations")
     public void consumeReservationCancelledEvent(String jsonMessage) {
         System.out.println("received json message: " + jsonMessage);
@@ -33,6 +34,18 @@ public class ReservationEventListener {
             ReservationCancelledEvent event = DomainEvent.fromJson(jsonMessage, ReservationCancelledEvent.class);
             System.out.println("Processed ReservationCreatedEvent: " + event.toString());
             vehicleService.handleReservationCancelled(event);
+        } catch (JsonProcessingException e) {
+            System.err.println("Failed to deserialize ReservationCreatedEvent: " + e.getMessage());
+        }
+    }
+
+    @KafkaListener(topics = TopicHolder.TOPIC_RESERVATION_CANCELLED, groupId = "reservations")
+    public void consumeReservationCompletedEvent(String jsonMessage) {
+        System.out.println("received json message: " + jsonMessage);
+        try {
+            ReservationCancelledEvent event = DomainEvent.fromJson(jsonMessage, ReservationCancelledEvent.class);
+            System.out.println("Processed ReservationCreatedEvent: " + event.toString());
+            vehicleService.handleReservationCompleted(event);
         } catch (JsonProcessingException e) {
             System.err.println("Failed to deserialize ReservationCreatedEvent: " + e.getMessage());
         }

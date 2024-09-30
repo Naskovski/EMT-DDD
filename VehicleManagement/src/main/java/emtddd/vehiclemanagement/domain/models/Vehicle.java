@@ -7,6 +7,7 @@ import emtddd.vehiclemanagement.service.form.VehicleForm;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class Vehicle extends AbstractEntity<VehicleID> {
     private String modelName;
     private String gpsId;
     private String registrationPlate;
+    @Setter
     @AttributeOverride(name="id", column = @Column(name="location_id"))
     private DomainObjectId locationId;
     private Money pricePerDay;

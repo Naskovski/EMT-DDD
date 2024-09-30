@@ -2,18 +2,21 @@ import React, {useContext, useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {AuthContext} from "../AuthContext";
 import CalendarComponent from "./calendarComponent";
+import VehicleCard from "./VehicleCard"; // You need to create this component or reuse an existing one
 
 function AdminCreateReservation() {
     const navigate = useNavigate();
-    const { user, setUser } = useContext(AuthContext);
-    const location = useLocation();
-    const { vehicle } = location.state || {};
-
+    const {user} = useContext(AuthContext);
     const [clientId, setClientId] = useState("error");
-    const [employeeId] = useState("null");
+    const [employeeId, setEmployeeId] = useState("null");
     const [reservationStart, setReservationStart] = useState("");
     const [reservationEnd, setReservationEnd] = useState("");
     const [availableDates, setAvailableDates] = useState([]);
+    const [vehicles, setVehicles] = useState([]);
+    const [selectedVehicle, setSelectedVehicle] = useState(null);
+    const [searchEmail, setSearchEmail] = useState("");
+    const [clientSearchResult, setClientSearchResult] = useState(undefined);
+    const [mailOK, setMailOK] = useState(undefined);
 
     useEffect(() => {
         if (!user) {
@@ -21,48 +24,52 @@ function AdminCreateReservation() {
             return;
         }
 
-        setClientId(user.userId);
-
-        const fetchAvailableDates = async () => {
+        setEmployeeId(user.userId);
+        const fetchVehicles = async () => {
             try {
-                const today = new Date();
-                const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
-                const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 2, 0);
-                const formatDate = (date) => date.toISOString().split('T')[0];
-
-                const startDate = formatDate(firstDayOfMonth);
-                const endDate = formatDate(lastDayOfMonth);
-
-                const response = await fetch(`/api/vehicle/${vehicle.vehicleId}/available_dates?startDate=${startDate}&endDate=${endDate}`);
-                const dates = await response.json();
-
-                console.log('current vehicle:', vehicle);
-                console.log('available dates response status:', response.status);
-                setAvailableDates(dates);
-                console.log('available dates @ createReservationForm', availableDates);
+                const response = await fetch(`/api/vehicle/all`); // Adjust endpoint if needed
+                const data = await response.json();
+                setVehicles(data);
             } catch (error) {
-                console.error("Error fetching available dates:", error);
+                console.error("Error fetching vehicles:", error);
             }
         };
 
+        fetchVehicles();
+    }, [user, navigate]);
 
-        fetchAvailableDates();
-    }, [user, navigate, vehicle.id]);
+    const fetchAvailableDates = async (vehicleId) => {
+        try {
+            const today = new Date();
+            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
+            const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+            const formatDate = (date) => date.toISOString().split('T')[0];
+
+            const startDate = formatDate(firstDayOfMonth);
+            const endDate = formatDate(lastDayOfMonth);
+
+            const response = await fetch(`/api/vehicle/${vehicleId}/available_dates?startDate=${startDate}&endDate=${endDate}`);
+            const dates = await response.json();
+
+            setAvailableDates(dates);
+        } catch (error) {
+            console.error("Error fetching available dates:", error);
+        }
+    };
 
     const handleReservationSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('user: ', user)
         const reservationData = {
-            clientId: user?.userId,
+            clientId,
             employeeId,
-            vehicleId: vehicle.vehicleId,
+            vehicleId: selectedVehicle.vehicleId,
+            locationId: selectedVehicle.locationId.id,
             reservationStart: new Date(reservationStart).toISOString(),
             reservationEnd: new Date(reservationEnd).toISOString(),
         };
 
         try {
-            console.log('reservationData: ', reservationData);
             const response = await fetch("/api/reservation/create", {
                 method: "POST",
                 headers: {
@@ -73,7 +80,7 @@ function AdminCreateReservation() {
 
             if (response.ok) {
                 alert("Reservation created successfully!");
-                navigate("/");
+                navigate("/empPanel/pending");
             } else {
                 alert("Failed to create reservation. Try again!");
             }
@@ -83,42 +90,92 @@ function AdminCreateReservation() {
         }
     };
 
+    const handleSearchClientByEmail = async () => {
+        try {
+            const response = await fetch(`/api/client/searchByMail?query=${searchEmail}`);
+            if (response.ok) {
+                const result = await response.json();
+                console.log('mail seatch result: ', result);
+                setMailOK(true);
+                setClientSearchResult(result);
+                setClientId(result.userId)
+            } else if (response.status === 404) {
+                setMailOK(false);
+            }
+
+        } catch (error) {
+            console.error("Error searching client by email:", error);
+        }
+    };
+
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="bg-dark-grey p-8 rounded-lg shadow-lg w-1/2 m-12" style={{minWidth: '60rem'}}>
-                <h1 className="text-3xl font-bold mb-6 text-center">ADMIN Create Reservation</h1>
-                <form id="input-fields" className="space-y-4" onSubmit={handleReservationSubmit}>
-                    <div className={'flex w-full justify-around'}>
-                        <div style={{width: '30rem', maxWidth: '50rem'}}>
-                            <CalendarComponent
-                                availableDates={availableDates}
-                                onDateSelect={(start, end) => {
-                                    setReservationStart(start);
-                                    setReservationEnd(end);
-                                }}
-                            />
-                        </div>
-                        <div className="mt-4 text-center w-auto">
-                            <h3 className={'text-3xl my-16 font-bold'}>Vehicle details</h3>
-                            <p>{vehicle.modelName}</p>
-                            <p>Registration Plate: {vehicle.registrationPlate}</p>
-                            <p>Location: {vehicle.location}</p>
-                            <p>Price per Day: {vehicle.pricePerDay}€</p>
-                        </div>
+        <div className="p-5">
+            <h1 className="text-3xl font-bold mb-6 text-center">ADMIN Create Reservation</h1>
+            <form id="input-fields" className="space-y-4" onSubmit={handleReservationSubmit}>
+                <div className="mb-4">
+                    <label className="text-white">Search Client by Email:</label>
+                    <div className="flex justify-around">
+                        <input
+                            type="text"
+                            className="w-full p-2 bg-gray-800 text-white border my-1 border-gray-600 rounded-lg"
+                            value={searchEmail}
+                            onChange={(e) => setSearchEmail(e.target.value)}
+                            placeholder="Enter client email"
+                        />
+                        <button
+                            type="button"
+                            className="m-2 bg-yellow-green-gradient py-2 px-4 rounded-lg"
+                            onClick={handleSearchClientByEmail}
+                        >
+                            Search
+                        </button>
                     </div>
-
-                    <button
-                        type="submit"
-                        className="text-dark-grey w-full py-3 rounded-lg bg-yellow-green-gradient hover:opacity-80 transition"
-                    >
-                        Reserve
-                    </button>
-                    <div className={'text-center text-opacity-50'}>
-                        <em>Payment is done on-location, when you take the car</em>
+                    <div className="mt-2">
+                        {mailOK && <span>
+                                    User Found: {clientSearchResult.name}
+                                </span>}
+                        {mailOK === false && <span>
+                                    User with that mail does not exist
+                                </span>}
                     </div>
-                </form>
+                </div>
 
-            </div>
+                {/* Vehicle Selection */}
+                <h3 className="text-2xl text-white mb-4">Select a Vehicle</h3>
+                <div className="overflow-x-scroll overflow-y-hidden flex space-x-4">
+                    {vehicles.map((vehicle) => (
+                        <VehicleCard
+                            key={vehicle.vehicleId}
+                            vehicle={vehicle}
+                            onClick={() => {
+                                setSelectedVehicle(vehicle);
+                                fetchAvailableDates(vehicle.vehicleId);
+                            }}
+                            selected={selectedVehicle && selectedVehicle.vehicleId === vehicle.vehicleId}
+                        />
+                    ))}
+                </div>
+
+                {/* Calendar Component */}
+                <div className="flex justify-center">
+                    <CalendarComponent
+                        availableDates={availableDates}
+                        onDateSelect={(start, end) => {
+                            setReservationStart(start);
+                            setReservationEnd(end);
+                        }}
+                        mode={'landscape'}
+                    />
+                </div>
+
+                {/* Reservation Submission */}
+                <button
+                    type="submit"
+                    className="text-dark-grey w-full py-3 rounded-lg bg-yellow-green-gradient hover:opacity-80 transition"
+                >
+                    Reserve
+                </button>
+            </form>
         </div>
     );
 }

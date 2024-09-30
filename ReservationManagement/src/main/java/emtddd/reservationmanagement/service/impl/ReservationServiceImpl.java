@@ -9,6 +9,7 @@ import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCancelledEvent;
+import emtddd.sharedkernel.domain.events.reservations.ReservationCompletedEvent;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCreatedEvent;
 import emtddd.sharedkernel.domain.exceptions.InvalidIdException;
 import emtddd.sharedkernel.infra.DomainEventPublisher;
@@ -46,6 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
 //        var client = clientRepository.findById(reservationForm.getClient_id()).orElseThrow(InvalidClientIdException::new);
 //        client.addPoints();
 //        clientRepository.save(client);
+        //todo add this in usermanagement with kafka listener
 
 
         ReservationCreatedEvent event = new ReservationCreatedEvent(
@@ -79,6 +81,32 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public ReservationID startReservation(ReservationID reservationID, UserID employeeId) {
+        Reservation reservation = this.findById(reservationID).orElseThrow(InvalidIdException::new);
+        reservation.setReservationStatus(ReservationStatus.STARTED);
+        reservation.setEmployeeID(employeeId);
+        return reservation.getId();
+    }
+
+    @Override
+    public ReservationID completeReservation(ReservationID reservationID, LocationID locationID, UserID employeeId) {
+        Reservation reservation = this.findById(reservationID).orElseThrow(InvalidIdException::new);
+        reservation.setReservationStatus(ReservationStatus.COMPLETED);
+        reservation.setEmployeeID(employeeId);
+        ReservationCompletedEvent event = new ReservationCompletedEvent(
+                reservation.getId(),
+                reservation.getVehicleID(),
+                reservation.getClientId(),
+                locationID,
+                reservation.getReservationStart(),
+                reservation.getReservationEnd()
+        );
+        domainEventPublisher.publish(event);
+
+        return reservation.getId();
+    }
+
+    @Override
     public List<Reservation> listAll() {
         return reservationRepository.findAll();
     }
@@ -97,6 +125,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Page<Reservation> findAllByStatusAndLocation(ReservationStatus status, LocationID locationId, Pageable pageable) {
         return reservationRepository.findAllByLocationIdAndReservationStatusOrderByReservationStart(locationId, status, pageable);
+    }
+
+    @Override
+    public Page<Reservation> findAllByStatus(ReservationStatus status, Pageable pageable) {
+        return reservationRepository.findAllByReservationStatusOrderByReservationStart(status, pageable);
     }
 
     private Reservation toDomainObject(ReservationForm reservationForm) {

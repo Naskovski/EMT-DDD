@@ -22,6 +22,7 @@ function App() {
                     <Route path="pending" element={<AdminReservationsList status="RESERVED" />} />
                     <Route path="started" element={<AdminReservationsList status="STARTED" />} />
                     <Route path="completed" element={<AdminReservationsList status="COMPLETED" />} />
+                    <Route path="cancelled" element={<AdminReservationsList status="CANCELED" />} />
                 </Route>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>

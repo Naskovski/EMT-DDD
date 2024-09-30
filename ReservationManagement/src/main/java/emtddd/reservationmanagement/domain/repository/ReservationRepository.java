@@ -13,4 +13,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Reserv
     Page<Reservation> findAllByClientIdOrderByReservationStart(UserID clientId, Pageable pageable);
 
     Page<Reservation> findAllByLocationIdAndReservationStatusOrderByReservationStart(LocationID locationId, ReservationStatus reservationStatus, Pageable pageable);
+
+    Page<Reservation> findAllByReservationStatusOrderByReservationStart(ReservationStatus status, Pageable pageable);
 }

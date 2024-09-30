@@ -10,6 +10,14 @@ module.exports = function(app) {
         })
     );
     app.use(
+        '/api/client',
+        legacyCreateProxyMiddleware({
+            target: 'http://localhost:9090',
+            changeOrigin: true,
+            logLevel: 'debug',
+        })
+    );
+    app.use(
         '/api/reservation',
         legacyCreateProxyMiddleware({
             target: 'http://localhost:9091',

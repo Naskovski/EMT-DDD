@@ -1,19 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const VehicleCard = ({vehicle}) => {
+const VehicleCard = ({vehicle, onClick, selected}) => {
     const navigate = useNavigate();
+    const [bgColor, setBgColor] = useState('bg-dark-grey text-white')
 
     const handleClick = () => {
-        navigate('/create-reservation', {
-            state: { vehicle }
-        });
+        if(onClick) {
+            onClick();
+        } else {
+            navigate('/create-reservation', {
+                state: { vehicle }
+            });
+        }
     };
+
+    useEffect(() => {
+        if(selected) setBgColor('bg-yellow-green-end text-black')
+        else setBgColor('bg-dark-grey text-white')
+    }, [selected]);
     return (
         <div
-            className="max-w-sm mx-auto bg-dark-grey text-white rounded-lg shadow-lg
+            className={`${bgColor} max-w-sm mx-auto rounded-lg shadow-lg
             overflow-hidden transition-transform duration-300 transform hover:scale-105
-            hover:shadow-xl hover:ring-2 hover:ring-yellow-green-gradient"
+            hover:shadow-xl hover:ring-2 hover:ring-yellow-green-gradient`}
             onClick={handleClick}
             style={{width: "15rem", minWidth: '10rem'}}
         >

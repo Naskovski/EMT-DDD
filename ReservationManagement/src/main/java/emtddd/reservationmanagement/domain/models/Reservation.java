@@ -22,6 +22,7 @@ public class Reservation extends AbstractEntity<ReservationID> {
     @Embedded
     @AttributeOverride(name="id", column = @Column(name="client_id"))
     private UserID clientId;
+    @Setter
     @Embedded
     @AttributeOverride(name="id", column = @Column(name="employee_id"))
     private UserID employeeID;

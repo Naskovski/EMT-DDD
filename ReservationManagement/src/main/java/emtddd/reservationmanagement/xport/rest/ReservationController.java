@@ -3,12 +3,9 @@ package emtddd.reservationmanagement.xport.rest;
 import emtddd.reservationmanagement.domain.models.Reservation;
 import emtddd.reservationmanagement.domain.models.ReservationID;
 import emtddd.reservationmanagement.domain.models.ReservationStatus;
-import emtddd.reservationmanagement.domain.repository.ReservationRepository;
 import emtddd.reservationmanagement.domain.valueobjects.LocationID;
-import emtddd.reservationmanagement.domain.valueobjects.Status;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
-import emtddd.sharedkernel.domain.base.DomainObjectId;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.exceptions.InvalidIdException;
 import lombok.AllArgsConstructor;
@@ -43,6 +40,38 @@ public class ReservationController {
         }
     }
 
+    @PostMapping("/start")
+    public ResponseEntity<?> startReservation(@RequestParam String reservationId,
+                                              @RequestParam String employeeId) {
+        try {
+            ReservationID reservationID = new ReservationID(reservationId);
+            UserID employeeID = new UserID(employeeId);
+            reservationService.startReservation(reservationID, employeeID);
+            return ResponseEntity.ok("Reservation started successfully");
+        } catch (InvalidIdException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Reservation ID");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while canceling the reservation");
+        }
+    }
+
+    @PostMapping("/complete")
+    public ResponseEntity<?> completeReservation(@RequestParam String reservationId,
+                                                 @RequestParam String locationId,
+                                                 @RequestParam String employeeId) {
+        try {
+            ReservationID reservationID = new ReservationID(reservationId);
+            LocationID locationID = new LocationID(locationId);
+            UserID employeeID = new UserID(employeeId);
+            reservationService.completeReservation(reservationID, locationID, employeeID);
+            return ResponseEntity.ok("Reservation completed successfully");
+        } catch (InvalidIdException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Reservation ID");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while canceling the reservation");
+        }
+    }
+
     @GetMapping("/filter/client/{clientId}")
     public ResponseEntity<Page<Reservation>> getReservationsByClient(
             @PathVariable String clientId,
@@ -52,13 +81,19 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
-    @GetMapping("/filter/status/{status}/{locationId}")
+    @GetMapping("/filter/status/{status}")
     public ResponseEntity<Page<Reservation>> getReservationsByStatusAndLocation(
             @PathVariable ReservationStatus status,
-            @PathVariable String locationId,
+            @RequestParam(required = false) String locationId,
             Pageable pageable) {
-        LocationID locationID = new LocationID(locationId);
-        Page<Reservation> reservations = reservationService.findAllByStatusAndLocation(status, locationID, pageable);
+        Page<Reservation> reservations;
+
+        if (locationId == null || locationId.isEmpty()) {
+            reservations = reservationService.findAllByStatus(status, pageable);
+        } else {
+            LocationID locationID = new LocationID(locationId);
+            reservations = reservationService.findAllByStatusAndLocation(status, locationID, pageable);
+        }
         return ResponseEntity.ok(reservations);
     }
 }
