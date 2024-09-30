@@ -1,6 +1,6 @@
 package emtddd.locationmanagement.service.form;
 
-import emtddd.locationmanagement.domain.valueobjects.Address;
+import emtddd.sharedkernel.domain.valueobjects.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

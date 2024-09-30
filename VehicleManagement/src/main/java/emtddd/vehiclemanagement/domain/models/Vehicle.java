@@ -3,6 +3,7 @@ package emtddd.vehiclemanagement.domain.models;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
 import emtddd.sharedkernel.domain.base.DomainObjectId;
 import emtddd.sharedkernel.domain.valueobjects.Money;
+import emtddd.vehiclemanagement.domain.valueobjects.LocationID;
 import emtddd.vehiclemanagement.service.form.VehicleForm;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Vehicle extends AbstractEntity<VehicleID> {
     private String registrationPlate;
     @Setter
     @AttributeOverride(name="id", column = @Column(name="location_id"))
-    private DomainObjectId locationId;
+    private LocationID locationId;
     private Money pricePerDay;
     private Boolean isRetired;
 
@@ -63,7 +64,7 @@ public class Vehicle extends AbstractEntity<VehicleID> {
         return true;
     }
 
-    public void return_vehicle(@NonNull DomainObjectId new_location_id){
+    public void return_vehicle(@NonNull LocationID new_location_id){
         this.locationId = new_location_id;
     }
 }

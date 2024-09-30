@@ -1,4 +1,4 @@
-package emtddd.reservationmanagement.domain.valueobjects;
+package emtddd.vehiclemanagement.domain.valueobjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,6 @@ import emtddd.sharedkernel.domain.base.ValueObject;
 import emtddd.sharedkernel.domain.valueobjects.Address;
 import lombok.Getter;
 import lombok.NonNull;
-
 
 @Getter
 public class Location implements ValueObject {

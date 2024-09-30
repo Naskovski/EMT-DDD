@@ -1,12 +1,10 @@
 package emtddd.locationmanagement.domain.models;
 
-import emtddd.locationmanagement.domain.valueobjects.Address;
 import emtddd.locationmanagement.service.form.LocationForm;
 import emtddd.sharedkernel.domain.base.AbstractEntity;
-import emtddd.sharedkernel.domain.base.DomainObjectId;
+import emtddd.sharedkernel.domain.valueobjects.Address;
 import jakarta.persistence.Entity;
 import lombok.Getter;
-import lombok.NonNull;
 
 @Entity
 @Getter

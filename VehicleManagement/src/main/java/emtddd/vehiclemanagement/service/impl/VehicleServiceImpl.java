@@ -4,6 +4,7 @@ import emtddd.sharedkernel.domain.base.DomainObjectId;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCancelledEvent;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCreatedEvent;
 import emtddd.sharedkernel.domain.exceptions.InvalidIdException;
+import emtddd.sharedkernel.domain.valueobjects.Address;
 import emtddd.vehiclemanagement.domain.exceptions.VehicleIdDoesNotExistException;
 import emtddd.vehiclemanagement.domain.exceptions.VehicleNotAvailableException;
 import emtddd.vehiclemanagement.domain.models.Status;
@@ -12,8 +13,11 @@ import emtddd.vehiclemanagement.domain.models.Vehicle;
 import emtddd.vehiclemanagement.domain.models.VehicleID;
 import emtddd.vehiclemanagement.domain.repository.StatusOnDateRepository;
 import emtddd.vehiclemanagement.domain.repository.VehicleRepository;
+import emtddd.vehiclemanagement.domain.valueobjects.Location;
+import emtddd.vehiclemanagement.domain.valueobjects.LocationID;
 import emtddd.vehiclemanagement.service.VehicleService;
 import emtddd.vehiclemanagement.service.form.VehicleForm;
+import emtddd.vehiclemanagement.xport.client.LocationClient;
 import emtddd.vehiclemanagement.xport.dto.VehicleDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -30,10 +34,21 @@ import java.util.Optional;
 public class VehicleServiceImpl implements VehicleService {
     private final VehicleRepository vehicleRepository;
     private final StatusOnDateRepository statusOnDateRepository;
+    private final LocationClient locationClient;
 
     @Override
     public List<VehicleDto> findAll() {
-        return vehicleRepository.findAll().stream().map(VehicleDto::new).toList();
+        return vehicleRepository.findAll().stream().map(vehicle -> {
+            Location location = locationClient.findById(vehicle.getLocationId());
+
+            return new VehicleDto(vehicle.getId().getId(),
+                    vehicle.getModelName(),
+                    vehicle.getGpsId(),
+                    vehicle.getRegistrationPlate(),
+                    location,
+                    vehicle.getPricePerDay().getValue(),
+                    vehicle.getIsRetired());
+        }).toList();
     }
 
     @Override
@@ -54,7 +69,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle returnVehicle(VehicleID vehicleID, DomainObjectId locationId) {
+    public Vehicle returnVehicle(VehicleID vehicleID, LocationID locationId) {
         Vehicle vehicle = findById(vehicleID).orElseThrow(VehicleIdDoesNotExistException::new);
         vehicle.return_vehicle(locationId);
         return vehicleRepository.save(vehicle);
@@ -100,7 +115,16 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<VehicleDto> findAllAvailable() {
-        return vehicleRepository.findAllByIsRetiredFalse().stream().map(VehicleDto::new).toList();
+        return vehicleRepository.findAllByIsRetiredFalse().stream().map(vehicle -> {
+            Location location = locationClient.findById(vehicle.getLocationId());
+            return new VehicleDto(vehicle.getId().getId(),
+                    vehicle.getModelName(),
+                    vehicle.getGpsId(),
+                    vehicle.getRegistrationPlate(),
+                    location,
+                    vehicle.getPricePerDay().getValue(),
+                    vehicle.getIsRetired());
+        }).toList();
     }
 
     @Override
@@ -141,6 +165,6 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void handleReservationCompleted(ReservationCancelledEvent event) {
-        this.returnVehicle(new VehicleID(event.getVehicleId().getId()), event.getLocationId());
+        this.returnVehicle(new VehicleID(event.getVehicleId().getId()), new LocationID(event.getLocationId().getId()));
     }
 }

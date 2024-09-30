@@ -39,9 +39,9 @@ const ReservationCard = ({ reservation, onCancel }) => {
 
     return (
         <div className={`max-w-md mx-auto my-4 p-6 rounded-lg bg- shadow-lg text-white ${getStatusStyles()}`}>
-            <h2 className="text-xl font-bold mb-2">Reservation for Vehicle {vehicleID.id}</h2>
-            {user.userId !== clientId.id && <p className="mb-2">Client ID: {clientId.id}</p>}
-            {(user.userId === clientId.id && employeeID.id === 'null')?<p>This reservation was created by <em>you</em>.</p> :<p className="mb-2">Employee ID: {employeeID.id}</p>}
+            <h2 className="text-xl font-bold mb-2">Reservation for Vehicle {vehicleID?.id}</h2>
+            {user?.userId !== clientId?.id && <p className="mb-2">Client ID: {clientId?.id}</p>}
+            {(user?.userId === clientId?.id && employeeID?.id === 'null')?<p>This reservation was created by <em>you</em>.</p> :<p className="mb-2">Employee ID: {employeeID?.id}</p>}
             <p>{reservationStart && <span>{new Date(reservationStart).toDateString()}</span>}
                 {reservationEnd && <span> <em>to</em> {new Date(reservationEnd).toDateString()}</span>}</p>
             <p className="mb-4">Status: {reservationStatus}</p>

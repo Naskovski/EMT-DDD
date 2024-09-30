@@ -6,6 +6,7 @@ import emtddd.sharedkernel.domain.events.reservations.ReservationCreatedEvent;
 import emtddd.vehiclemanagement.domain.models.Status;
 import emtddd.vehiclemanagement.domain.models.Vehicle;
 import emtddd.vehiclemanagement.domain.models.VehicleID;
+import emtddd.vehiclemanagement.domain.valueobjects.LocationID;
 import emtddd.vehiclemanagement.service.form.VehicleForm;
 import emtddd.vehiclemanagement.xport.dto.VehicleDto;
 
@@ -19,7 +20,7 @@ public interface VehicleService {
     Optional<Vehicle> findById(VehicleID vehicleID);
     Vehicle create(VehicleForm vehicleForm);
     Vehicle retire(VehicleID vehicleID);
-    Vehicle returnVehicle(VehicleID vehicleID, DomainObjectId locationId);
+    Vehicle returnVehicle(VehicleID vehicleID, LocationID locationId);
     Vehicle rent(VehicleID vehicleID, LocalDate startDate, LocalDate endDate);
     List<LocalDate> getAvailableDays(Vehicle vehicle, java.time.LocalDate startDate, java.time.LocalDate endDate);
     List<VehicleDto> findAllAvailable();

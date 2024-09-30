@@ -21,7 +21,7 @@ function Homepage() {
             try {
                 const response = await fetch(`/api/vehicle/available`);
                 const vehi = await response.json();
-                // console.log(await response.json())
+                console.log(vehi)
                 setVehicles(vehi);
             } catch (error) {
                 console.error("Error fetching available dates:", error);

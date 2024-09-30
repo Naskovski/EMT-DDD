@@ -64,7 +64,7 @@ function AdminCreateReservation() {
             clientId,
             employeeId,
             vehicleId: selectedVehicle.vehicleId,
-            locationId: selectedVehicle.locationId.id,
+            locationId: selectedVehicle.location.locationID.id,
             reservationStart: new Date(reservationStart).toISOString(),
             reservationEnd: new Date(reservationEnd).toISOString(),
         };

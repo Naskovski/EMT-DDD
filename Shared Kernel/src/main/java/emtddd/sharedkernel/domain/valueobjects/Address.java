@@ -1,5 +1,7 @@
-package emtddd.locationmanagement.domain.valueobjects;
+package emtddd.sharedkernel.domain.valueobjects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import emtddd.sharedkernel.domain.base.ValueObject;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
@@ -12,7 +14,9 @@ public class Address implements ValueObject {
     private String street;
     private int number;
 
-    public Address(String street, int number) {
+    @JsonCreator
+    public Address(@JsonProperty("street") String street,
+                   @JsonProperty("number") int number) {
         this.street = street;
         this.number = number;
     }

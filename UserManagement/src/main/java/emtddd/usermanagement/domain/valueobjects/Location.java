@@ -1,5 +1,6 @@
 package emtddd.usermanagement.domain.valueobjects;
 
+import emtddd.sharedkernel.domain.valueobjects.Address;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import emtddd.sharedkernel.domain.base.ValueObject;

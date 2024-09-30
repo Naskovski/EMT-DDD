@@ -57,7 +57,7 @@ function CreateReservationForm() {
             clientId: user?.userId,
             employeeId,
             vehicleId: vehicle.vehicleId,
-            locationId: vehicle.locationId.id,
+            locationId: vehicle.location.locationID.id,
             reservationStart: new Date(reservationStart).toISOString(),
             reservationEnd: new Date(reservationEnd).toISOString(),
         };
@@ -103,7 +103,7 @@ function CreateReservationForm() {
                             <h3 className={'text-3xl my-16 font-bold'}>Vehicle details</h3>
                             <p>{vehicle.modelName}</p>
                             <p>Registration Plate: {vehicle.registrationPlate}</p>
-                            <p>Location: {vehicle.locationId.id}</p>
+                            <p>Location: {vehicle.location.locationID.id}</p>
                             <p>Price per Day: {vehicle.pricePerDay}€</p>
                         </div>
                     </div>

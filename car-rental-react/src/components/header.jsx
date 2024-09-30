@@ -1,8 +1,8 @@
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {AuthContext} from "../AuthContext";
 import {useNavigate} from "react-router-dom";
 
-function Header(){
+function Header() {
     const {user, setUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -11,6 +11,10 @@ function Header(){
         localStorage.removeItem("user");
         setUser(null);
     };
+
+    useEffect(() => {
+
+    }, []);
 
     return (
         <header className="text-white p-4 shadow-md">
@@ -22,11 +26,16 @@ function Header(){
                         className="text-white px-4 py-2 rounded-lg hover:opacity-90 transition hover:bg-white hover:text-dark-grey hover:bg-opacity-85 transition">
                         Login
                     </button>}
-                    {user && <button
-                        onClick={logout}
-                        className="ml-4 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
-                        Logout
-                    </button>}
+                    {user && <div>
+                        <span className="text-yellow-200">
+                            {user.name}
+                        </span>
+                        <button
+                            onClick={logout}
+                            className="ml-4 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                            Logout
+                        </button>
+                    </div>}
 
                 </div>
             </div>

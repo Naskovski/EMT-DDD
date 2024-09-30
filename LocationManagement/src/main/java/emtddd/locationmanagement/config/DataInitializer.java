@@ -2,8 +2,8 @@ package emtddd.locationmanagement.config;
 
 import emtddd.locationmanagement.domain.models.Location;
 import emtddd.locationmanagement.domain.repository.LocationRepository;
-import emtddd.locationmanagement.domain.valueobjects.Address;
 import emtddd.locationmanagement.service.form.LocationForm;
+import emtddd.sharedkernel.domain.valueobjects.Address;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
