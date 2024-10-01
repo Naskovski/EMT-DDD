@@ -124,7 +124,7 @@ function AdminCreateReservation() {
                         />
                         <button
                             type="button"
-                            className="m-2 bg-yellow-green-gradient py-2 px-4 rounded-lg"
+                            className="m-2 bg-yellow-green-gradient text-slate-900 py-2 px-4 rounded-lg"
                             onClick={handleSearchClientByEmail}
                         >
                             Search

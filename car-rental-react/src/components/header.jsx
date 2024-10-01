@@ -40,7 +40,8 @@ function Header() {
     return (
         <header className="text-white p-4 shadow-md">
             <div className="container mx-auto flex justify-between items-center">
-                <h1 onClick={() => navigate("/")} className="text-2xl font-bold">Swift Rentals</h1>
+                <h1 onClick={() => navigate("/")} className="text-2xl font-bold text-yellow-green-start">
+                    Swift<span className={'text-white'}>Rentals</span></h1>
                 <div>
                     {!user && <button
                         onClick={() => navigate("/login")}
