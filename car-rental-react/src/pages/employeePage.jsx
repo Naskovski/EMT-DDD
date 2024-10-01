@@ -34,7 +34,7 @@ function EmployeePage() {
             <div className="w-1/4 p-4">
                 <ul className="space-y-4">
                     <li>
-                        <Link to="/empPanel/create" className="text-white bg-yellow-green-gradient py-2 px-4 rounded-lg block text-center">
+                        <Link to="/empPanel/create" className="text-black bg-yellow-green-gradient py-2 px-4 rounded-lg block text-center">
                             Create New Reservation
                         </Link>
                     </li>
