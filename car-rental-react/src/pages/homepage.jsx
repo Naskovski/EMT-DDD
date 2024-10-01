@@ -35,11 +35,11 @@ function Homepage() {
                 <div className="absolute inset-0 bg-black opacity-40"></div>
                 <div className="relative z-10 flex items-center justify-center h-full">
                     {!user && <div className="text-center text-white px-6 md:px-10">
-                        <h1 className="text-5xl md:text-7xl font-extrabold mb-4">
-                            Drive Your Dream Car Today
+                        <h1 className="text-5xl md:text-7xl font-extrabold mb-4 text-yellow-200">
+                            Your next journey starts here
                         </h1>
                         <p className="text-lg md:text-xl mb-8">
-                            Choose from a wide range of luxury cars for your perfect journey.
+                            Choose from a wide range of cars for your perfect journey.
                         </p>
                         <a  href={'#main'}
                             className="text-xl bg-yellow-green-gradient text-dark-grey py-3 px-6 rounded-full hover:custom-bg-gradient-neon-2 transition">
