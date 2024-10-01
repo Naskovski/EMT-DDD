@@ -26,6 +26,14 @@ module.exports = function(app) {
         })
     );
     app.use(
+        '/api/location',
+        legacyCreateProxyMiddleware({
+            target: 'http://localhost:9093',
+            logLevel: 'debug',
+            changeOrigin: true,
+        })
+    );
+    app.use(
         '/api/vehicle',
         legacyCreateProxyMiddleware({
             target: 'http://localhost:9094',

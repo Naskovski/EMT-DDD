@@ -33,7 +33,7 @@ function Homepage() {
 
     return (
         <div className="homepage px-20 flex flex-wrap justify-around">
-            <div className="w-1/2 custom-bg-gradient-neon p-5 rounded-2xl m-6 inline-block">
+            <div className="w-1/2 custom-bg-gradient-neon p-5 rounded-2xl m-6 inline-block" style={{maxHeight: '22rem'}}>
                 <span className="text-4xl ml-6 font-bold bg-gradient-to-r from-yellow-400 to-yellow-green-end bg-clip-text text-transparent">
                     Choose the perfect car
                 </span>
@@ -45,7 +45,7 @@ function Homepage() {
                 </Carousel>
                 {vehicles.length === 0 && <h2 className="text-center "> Sorry, currently no cars are available</h2>}
             </div>
-            {user && <div className="w-1/3 bg-opacity-10 bg-white p-5 rounded-2xl m-6 inline-block">
+            {user && <div className="w-1/3 bg-opacity-10 bg-white p-5 rounded-2xl m-6 inline-block overflow-y-scroll" style={{maxHeight: '35rem'}}>
                 <ReservationsList clientId={user?.userId} />
             </div>}
         </div>
