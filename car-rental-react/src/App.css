@@ -30,3 +30,9 @@
     border-radius: 5px;
 }
 
+.custom-bg-gradient-neon-2{
+    background: linear-gradient(45deg, #003b2d, #ccee52, #00ff7f, #e1d012);
+    background-size: 400% 400%;
+    animation: horiz-slide 5s ease infinite;
+}
+

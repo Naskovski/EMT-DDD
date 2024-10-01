@@ -41,16 +41,16 @@ function Homepage() {
                         <p className="text-lg md:text-xl mb-8">
                             Choose from a wide range of luxury cars for your perfect journey.
                         </p>
-                        <button
-                            className="text-xl bg-yellow-green-gradient text-dark-grey py-3 px-6 rounded-full hover:opacity-90 transition">
+                        <a  href={'#main'}
+                            className="text-xl bg-yellow-green-gradient text-dark-grey py-3 px-6 rounded-full hover:custom-bg-gradient-neon-2 transition">
                             Explore Cars
-                        </button>
+                        </a>
                     </div>}
                 </div>
             </div>
 
-            <div className="homepage px-20 flex flex-wrap justify-around">
-                <div className="w-1/2 custom-bg-gradient-neon p-5 rounded-2xl m-6 inline-block"
+            <div id={'main'} className="homepage px-20 flex flex-wrap justify-around">
+                <div className={`${user?'w-1/2':'w-full'} custom-bg-gradient-neon p-5 rounded-2xl m-6 inline-block`}
                      style={{maxHeight: '22rem'}}>
                     <span
                         className="text-4xl ml-6 font-bold bg-gradient-to-r from-yellow-400 to-yellow-green-end bg-clip-text text-transparent">

@@ -140,7 +140,6 @@ function AdminCreateReservation() {
                     </div>
                 </div>
 
-                {/* Vehicle Selection */}
                 <h3 className="text-2xl text-white mb-4">Select a Vehicle</h3>
                 <div className="overflow-x-scroll overflow-y-hidden flex space-x-4">
                     {vehicles.map((vehicle) => (
@@ -156,7 +155,6 @@ function AdminCreateReservation() {
                     ))}
                 </div>
 
-                {/* Calendar Component */}
                 <div className="flex justify-center">
                     <CalendarComponent
                         availableDates={availableDates}
@@ -168,7 +166,6 @@ function AdminCreateReservation() {
                     />
                 </div>
 
-                {/* Reservation Submission */}
                 <button
                     type="submit"
                     className="text-dark-grey w-full py-3 rounded-lg bg-yellow-green-gradient hover:opacity-80 transition"

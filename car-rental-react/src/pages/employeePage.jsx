@@ -30,7 +30,6 @@ function EmployeePage() {
 
     return (
         <div className="flex min-h-screen px-20">
-            {/* Sidebar */}
             <div className="w-1/4 p-4">
                 <ul className="space-y-4">
                     <li>
@@ -61,9 +60,8 @@ function EmployeePage() {
                 </ul>
             </div>
 
-            {/* Main Content */}
             <div className="w-3/4 p-4 rounded-2xl bg-opacity-10 bg-white h-auto max-h-fit overflow-y-scroll my-5">
-                <Outlet /> {/* This will render the components based on the route */}
+                <Outlet />
             </div>
         </div>
     );
