@@ -3,7 +3,7 @@ import {AuthContext} from "../AuthContext";
 
 const ReservationCard = ({ reservation, onCancel }) => {
     const {user} = useContext(AuthContext);
-    const { vehicleID, clientId, employeeID, reservationStart, reservationEnd, reservationStatus } = reservation;
+    const { vehicle, client, employee, reservationStart, reservationEnd, reservationStatus } = reservation;
 
     const handleCancel = async () => {
         try {
@@ -39,9 +39,9 @@ const ReservationCard = ({ reservation, onCancel }) => {
 
     return (
         <div className={`max-w-md mx-auto my-4 p-6 rounded-lg bg- shadow-lg text-white ${getStatusStyles()}`}>
-            <h2 className="text-xl font-bold mb-2">Reservation for Vehicle {vehicleID?.id}</h2>
-            {user?.userId !== clientId?.id && <p className="mb-2">Client ID: {clientId?.id}</p>}
-            {(user?.userId === clientId?.id && employeeID?.id === 'null')?<p>This reservation was created by <em>you</em>.</p> :<p className="mb-2">Employee ID: {employeeID?.id}</p>}
+            <h2 className="text-xl font-bold mb-2">Reservation for Vehicle {vehicle?.modelName} - {vehicle?.registrationPlate}</h2>
+            {user?.userId !== client?.userId.id && <p className="mb-2">Client ID: {client?.name}</p>}
+            {(user?.userId === client?.userId.id && employee?.userId.id === 'null')?<p>This reservation was created by <em>you</em>.</p> :<p className="mb-2">Employee: {employee?.name}</p>}
             <p>{reservationStart && <span>{new Date(reservationStart).toDateString()}</span>}
                 {reservationEnd && <span> <em>to</em> {new Date(reservationEnd).toDateString()}</span>}</p>
             <p className="mb-4">Status: {reservationStatus}</p>

@@ -1,10 +1,10 @@
 package emtddd.reservationmanagement.xport.client;
 
-import emtddd.reservationmanagement.domain.valueobjects.Location;
-import emtddd.reservationmanagement.domain.valueobjects.LocationID;
-import emtddd.reservationmanagement.domain.valueobjects.Vehicle;
-import emtddd.reservationmanagement.domain.valueobjects.VehicleID;
-import emtddd.sharedkernel.domain.valueobjects.Address;
+
+import emtddd.reservationmanagement.domain.valueobjects.Employee;
+import emtddd.reservationmanagement.domain.valueobjects.UserDetails;
+import emtddd.sharedkernel.domain.base.UserID;
+import emtddd.sharedkernel.domain.valueobjects.Email;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -18,11 +18,11 @@ import java.util.List;
 
 
 @Service
-public class VehicleClient {
+public class AppClientClient {
     private final RestTemplate restTemplate;
     private final String serverUrl;
 
-    public VehicleClient(@Value("${app.vehicle-management.url}") String serverUrl) {
+    public AppClientClient(@Value("${app.employee-management.url}") String serverUrl) {
         this.serverUrl = serverUrl;
         this.restTemplate = new RestTemplate();
         var requestFactory = new SimpleClientHttpRequestFactory();
@@ -33,9 +33,9 @@ public class VehicleClient {
         return UriComponentsBuilder.fromUriString(this.serverUrl);
     }
 
-    public List<Vehicle> findAll() {
+    public List<Employee> findAll() {
         try {
-            return restTemplate.exchange(uri().path("/api/vehicle/all").build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<List<Vehicle>>() {
+            return restTemplate.exchange(uri().path("/api/client/all").build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<List<Employee>>() {
             }).getBody();
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -43,13 +43,15 @@ public class VehicleClient {
         }
     }
 
-    public Vehicle findById(VehicleID vehicleID){
+    public UserDetails findById(UserID userID){
         try {
-            return restTemplate.exchange(uri().path("/api/vehicle/id/"+vehicleID.getId()).build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<Vehicle>() {
+            return restTemplate.exchange(uri().path("/api/client/id/"+userID.getId()).build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<UserDetails>() {
             }).getBody();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return new Vehicle(vehicleID,null, null, null, null,null, null);
+            return new UserDetails(userID.getId(), null, null);
         }
     }
+
 }
+

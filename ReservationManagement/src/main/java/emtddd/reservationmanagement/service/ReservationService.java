@@ -5,6 +5,7 @@ import emtddd.reservationmanagement.domain.models.ReservationID;
 import emtddd.reservationmanagement.domain.models.ReservationStatus;
 import emtddd.reservationmanagement.domain.valueobjects.LocationID;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
+import emtddd.reservationmanagement.xport.dto.ReservationDTO;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.models.User;
 import org.springframework.data.domain.Page;
@@ -19,8 +20,8 @@ public interface ReservationService {
     ReservationID startReservation(ReservationID reservationID, UserID employeeId);
     ReservationID completeReservation(ReservationID reservationID, LocationID locationID, UserID employeeId);
     List<Reservation> listAll();
-    Page<Reservation> findAllByClient(UserID clientId, Pageable pageable);
+    Page<ReservationDTO> findAllByClient(UserID clientId, Pageable pageable);
     Optional<Reservation> findById(ReservationID id);
-    Page<Reservation> findAllByStatusAndLocation(ReservationStatus status, LocationID locationId, Pageable pageable);
-    Page<Reservation> findAllByStatus(ReservationStatus status, Pageable pageable);
+    Page<ReservationDTO> findAllByStatusAndLocation(ReservationStatus status, LocationID locationId, Pageable pageable);
+    Page<ReservationDTO> findAllByStatus(ReservationStatus status, Pageable pageable);
 }

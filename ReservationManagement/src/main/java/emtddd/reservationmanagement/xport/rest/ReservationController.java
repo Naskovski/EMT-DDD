@@ -6,6 +6,7 @@ import emtddd.reservationmanagement.domain.models.ReservationStatus;
 import emtddd.reservationmanagement.domain.valueobjects.LocationID;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
+import emtddd.reservationmanagement.xport.dto.ReservationDTO;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.exceptions.InvalidIdException;
 import lombok.AllArgsConstructor;
@@ -73,20 +74,20 @@ public class ReservationController {
     }
 
     @GetMapping("/filter/client/{clientId}")
-    public ResponseEntity<Page<Reservation>> getReservationsByClient(
+    public ResponseEntity<Page<ReservationDTO>> getReservationsByClient(
             @PathVariable String clientId,
             Pageable pageable) {
         UserID userID = new UserID(clientId);
-        Page<Reservation> reservations = reservationService.findAllByClient(userID, pageable);
+        Page<ReservationDTO> reservations = reservationService.findAllByClient(userID, pageable);
         return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/filter/status/{status}")
-    public ResponseEntity<Page<Reservation>> getReservationsByStatusAndLocation(
+    public ResponseEntity<Page<ReservationDTO>> getReservationsByStatusAndLocation(
             @PathVariable ReservationStatus status,
             @RequestParam(required = false) String locationId,
             Pageable pageable) {
-        Page<Reservation> reservations;
+        Page<ReservationDTO> reservations;
 
         if (locationId == null || locationId.isEmpty()) {
             reservations = reservationService.findAllByStatus(status, pageable);

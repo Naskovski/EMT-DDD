@@ -18,6 +18,7 @@ import java.util.Optional;
 public interface VehicleService {
     List<VehicleDto> findAll();
     Optional<Vehicle> findById(VehicleID vehicleID);
+    Optional<VehicleDto> findDTOById(VehicleID vehicleID);
     Vehicle create(VehicleForm vehicleForm);
     Vehicle retire(VehicleID vehicleID);
     Vehicle returnVehicle(VehicleID vehicleID, LocationID locationId);

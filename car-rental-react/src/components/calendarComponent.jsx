@@ -93,7 +93,7 @@ const Calendar = ({ availableDates, onDateSelect, mode = "portrait" }) => {
                     disabled={!isAvailable}
                     className={`p-2 m-1 transition rounded ${isAvailable
                         ? inRange
-                            ? "bg-yellow-green-end"
+                            ? "bg-yellow-green-end text-slate-900"
                             : "bg-green-500 hover:bg-yellow-green-end"
                         : "bg-gray-500 hover:cursor-not-allowed hover:bg-gray-400"}`}
                     onClick={(e) => handleDateClick(currentDate, e)}

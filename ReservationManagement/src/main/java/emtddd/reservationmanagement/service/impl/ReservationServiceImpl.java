@@ -4,9 +4,17 @@ import emtddd.reservationmanagement.domain.models.Reservation;
 import emtddd.reservationmanagement.domain.models.ReservationID;
 import emtddd.reservationmanagement.domain.models.ReservationStatus;
 import emtddd.reservationmanagement.domain.repository.ReservationRepository;
+import emtddd.reservationmanagement.domain.valueobjects.Location;
 import emtddd.reservationmanagement.domain.valueobjects.LocationID;
+import emtddd.reservationmanagement.domain.valueobjects.UserDetails;
+import emtddd.reservationmanagement.domain.valueobjects.Vehicle;
 import emtddd.reservationmanagement.service.ReservationService;
 import emtddd.reservationmanagement.service.forms.ReservationForm;
+import emtddd.reservationmanagement.xport.client.AppClientClient;
+import emtddd.reservationmanagement.xport.client.EmployeeClient;
+import emtddd.reservationmanagement.xport.client.LocationClient;
+import emtddd.reservationmanagement.xport.client.VehicleClient;
+import emtddd.reservationmanagement.xport.dto.ReservationDTO;
 import emtddd.sharedkernel.domain.base.UserID;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCancelledEvent;
 import emtddd.sharedkernel.domain.events.reservations.ReservationCompletedEvent;
@@ -29,10 +37,13 @@ import java.util.Optional;
 @Transactional
 @AllArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
-
     private final ReservationRepository reservationRepository;
     private final Validator validator;
     private final DomainEventPublisher domainEventPublisher;
+    private final LocationClient locationClient;
+    private final VehicleClient vehicleClient;
+    private final AppClientClient appClientClient;
+    private final EmployeeClient employeeClient;
 
     @Override
     public ReservationID placeReservation(ReservationForm reservationForm) {
@@ -112,8 +123,24 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Page<Reservation> findAllByClient(UserID clientId, Pageable pageable) {
-        return reservationRepository.findAllByClientIdOrderByReservationStart(clientId, pageable);
+    public Page<ReservationDTO> findAllByClient(UserID clientId, Pageable pageable) {
+        return reservationRepository.findAllByClientIdOrderByReservationStart(clientId, pageable).map(reservation -> {
+            Vehicle vehicle = vehicleClient.findById(reservation.getVehicleID());
+            Location location = locationClient.findById(reservation.getLocationId());
+            UserDetails client = appClientClient.findById(reservation.getClientId());
+            UserDetails employee = employeeClient.findById(reservation.getEmployeeID());
+
+            return new ReservationDTO(
+                    reservation.getId(),
+                    client,
+                    employee,
+                    vehicle,
+                    location,
+                    reservation.getReservationStart(),
+                    reservation.getReservationEnd(),
+                    reservation.getReservationStatus().name()
+            );
+        });
     }
 
 
@@ -123,13 +150,45 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Page<Reservation> findAllByStatusAndLocation(ReservationStatus status, LocationID locationId, Pageable pageable) {
-        return reservationRepository.findAllByLocationIdAndReservationStatusOrderByReservationStart(locationId, status, pageable);
+    public Page<ReservationDTO> findAllByStatusAndLocation(ReservationStatus status, LocationID locationId, Pageable pageable) {
+        return reservationRepository.findAllByLocationIdAndReservationStatusOrderByReservationStart(locationId, status, pageable).map(reservation -> {
+            Vehicle vehicle = vehicleClient.findById(reservation.getVehicleID());
+            Location location = locationClient.findById(reservation.getLocationId());
+            UserDetails client = appClientClient.findById(reservation.getClientId());
+            UserDetails employee = employeeClient.findById(reservation.getEmployeeID());
+
+            return new ReservationDTO(
+                    reservation.getId(),
+                    client,
+                    employee,
+                    vehicle,
+                    location,
+                    reservation.getReservationStart(),
+                    reservation.getReservationEnd(),
+                    reservation.getReservationStatus().name()
+            );
+        });
     }
 
     @Override
-    public Page<Reservation> findAllByStatus(ReservationStatus status, Pageable pageable) {
-        return reservationRepository.findAllByReservationStatusOrderByReservationStart(status, pageable);
+    public Page<ReservationDTO> findAllByStatus(ReservationStatus status, Pageable pageable) {
+        return reservationRepository.findAllByReservationStatusOrderByReservationStart(status, pageable).map(reservation -> {
+            Vehicle vehicle = vehicleClient.findById(reservation.getVehicleID());
+            Location location = locationClient.findById(reservation.getLocationId());
+            UserDetails client = appClientClient.findById(reservation.getClientId());
+            UserDetails employee = employeeClient.findById(reservation.getEmployeeID());
+
+            return new ReservationDTO(
+                    reservation.getId(),
+                    client,
+                    employee,
+                    vehicle,
+                    location,
+                    reservation.getReservationStart(),
+                    reservation.getReservationEnd(),
+                    reservation.getReservationStatus().name()
+            );
+        });
     }
 
     private Reservation toDomainObject(ReservationForm reservationForm) {

@@ -49,5 +49,4 @@ public class LocationClient {
             return new Location(locationID, "Information unvailable", new Address("Unavailable", 0));
         }
     }
-
 }

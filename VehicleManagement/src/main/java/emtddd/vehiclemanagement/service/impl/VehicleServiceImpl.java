@@ -57,6 +57,20 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public Optional<VehicleDto> findDTOById(VehicleID vehicleID) {
+        return vehicleRepository.findById(vehicleID).map(vehicle -> {
+            Location location = locationClient.findById(vehicle.getLocationId());
+            return new VehicleDto(vehicle.getId().getId(),
+                    vehicle.getModelName(),
+                    vehicle.getGpsId(),
+                    vehicle.getRegistrationPlate(),
+                    location,
+                    vehicle.getPricePerDay().getValue(),
+                    vehicle.getIsRetired());
+        });
+    }
+
+    @Override
     public Vehicle create(VehicleForm vehicleForm) {
         return vehicleRepository.save(new Vehicle(vehicleForm));
     }

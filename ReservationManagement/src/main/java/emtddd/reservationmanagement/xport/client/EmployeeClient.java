@@ -1,6 +1,9 @@
 package emtddd.reservationmanagement.xport.client;
 
 import emtddd.reservationmanagement.domain.valueobjects.Employee;
+import emtddd.reservationmanagement.domain.valueobjects.UserDetails;
+import emtddd.sharedkernel.domain.base.UserID;
+import emtddd.sharedkernel.domain.valueobjects.Email;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -36,6 +39,16 @@ public class EmployeeClient {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return Collections.emptyList();
+        }
+    }
+
+    public UserDetails findById(UserID userID){
+        try {
+            return restTemplate.exchange(uri().path("/api/employee/id/"+userID.getId()).build().toUri(), HttpMethod.GET,null, new ParameterizedTypeReference<UserDetails>() {
+            }).getBody();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new UserDetails(userID.getId(), null, null);
         }
     }
 

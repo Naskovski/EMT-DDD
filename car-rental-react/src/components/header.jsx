@@ -52,7 +52,7 @@ function Header() {
                             <span className="text-white px-4 py-2 hover:text-dark-grey">
                                 {location}
                             </span>}
-                        <span className="text-yellow-200">
+                        <span className="text-yellow-green-start">
                             {user.name}
                         </span>
                         <button

@@ -46,4 +46,13 @@ public class VehicleResource {
         List<LocalDate> availableDates = vehicleService.getAvailableDays(vehicle, startDate, endDate);
         return ResponseEntity.ok(availableDates);
     }
+
+    @GetMapping("/id/{vehicle_id}")
+    public ResponseEntity<VehicleDto> getDTObyId(
+            @PathVariable("vehicle_id") String vehicleId) {
+
+        Optional<VehicleDto> vehicleOpt = vehicleService.findDTOById(new VehicleID(vehicleId));
+
+        return vehicleOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    }
 }
